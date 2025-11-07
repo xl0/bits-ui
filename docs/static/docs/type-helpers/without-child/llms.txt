@@ -24,6 +24,4 @@ CustomAccordionHeader.svelte
 </Accordion.Header>
 ```
 
-[Previous WithElementRef](/docs/type-helpers/with-element-ref)
-
-[Next WithoutChildren](/docs/type-helpers/without-children)
+[Previous WithElementRef](/docs/type-helpers/with-element-ref) [Next WithoutChildren](/docs/type-helpers/without-children)

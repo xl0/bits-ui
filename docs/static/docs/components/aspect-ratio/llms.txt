@@ -24,7 +24,9 @@ Copy Page
 
 ## Architecture
 
-- **Root**: The root component which contains the aspect ratio logic ## Structure
+- **Root**: The root component which contains the aspect ratio logic
+
+## Structure
 
 Here's an overview of how the Aspect Ratio component is structured in code:
 
@@ -82,6 +84,7 @@ Use the `ratio` prop to set a custom aspect ratio for the image.
 
 ```svelte
 <AspectRatio.Root ratio={16 / 9}>
+  <!-- ... -->
 </AspectRatio.Root>
 ```
 
@@ -91,15 +94,15 @@ Use the `ratio` prop to set a custom aspect ratio for the image.
 
 The aspect ratio component.
 
-| Property                                                               | Type                                                                                                                                                                                                                                                            | Description                                                                                                                                                 | Details                                                                                                                                                                                      |
-| --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ratio` | `number`                                                                                                                                                                                                                                       | The desired aspect ratio.`Default: 1`                                                                                                         |                                      |
-| `ref` $bindable         | `HTMLDivElement`                                                                                                                                                                                                                               | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                           | `Snippet`                                                                                                                                                                                                                                      | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                              | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                 | Value                 | Description                         | Details                                                                                                                                                                                      |
-| --------------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-aspect-ratio-root` | `''` | Present on the root element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ratio`         | `number`                                                              | The desired aspect ratio.`Default: 1`                                                                                                         |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Alert Dialog](/docs/components/alert-dialog)
+| Data Attribute           | Value | Description                  | Details |
+| ------------------------ | ----- | ---------------------------- | ------- |
+| `data-aspect-ratio-root` | `''`  | Present on the root element. |         |
 
-[Next Avatar](/docs/components/avatar)
+[Previous Alert Dialog](/docs/components/alert-dialog) [Next Avatar](/docs/components/avatar)

@@ -33,9 +33,8 @@ CustomButton.svelte
   let { yourPropA, yourPropB, ref = $bindable(null) }: Props = $props();
 </script>
 <button bind:this={ref}>
+  <!-- ... -->
 </button>
 ```
 
-[Previous useId](/docs/utilities/use-id)
-
-[Next WithoutChild](/docs/type-helpers/without-child)
+[Previous useId](/docs/utilities/use-id) [Next WithoutChild](/docs/type-helpers/without-child)

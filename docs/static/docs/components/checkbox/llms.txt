@@ -46,13 +46,17 @@ The Checkbox component provides a flexible and accessible way to create checkbox
 
 ## Key Features
 
-- **Tri-State Support**: Handles checked, unchecked, and indeterminate states, providing versatility in form design.  
-- **Accessibility**: Built with WAI-ARIA guidelines in mind, ensuring keyboard navigation and screen reader support.  
-- **Flexible State Management**: Supports both controlled and uncontrolled state, allowing for full control over the checkbox's checked state. ## Architecture
+- **Tri-State Support**: Handles checked, unchecked, and indeterminate states, providing versatility in form design.
+- **Accessibility**: Built with WAI-ARIA guidelines in mind, ensuring keyboard navigation and screen reader support.
+- **Flexible State Management**: Supports both controlled and uncontrolled state, allowing for full control over the checkbox's checked state.
+
+## Architecture
 
 The Checkbox component is composed of the following parts:
 
-- **Root**: The main component that manages the state and behavior of the checkbox. ## Structure
+- **Root**: The main component that manages the state and behavior of the checkbox.
+
+## Structure
 
 Here's an overview of how the Checkbox component is structured in code:
 
@@ -65,9 +69,9 @@ Here's an overview of how the Checkbox component is structured in code:
     {#if indeterminate}
       -
     {:else if checked}
-      
+      ✅
     {:else}
-      
+      ❌
     {/if}
   {/snippet}
 </Checkbox.Root>
@@ -104,9 +108,9 @@ MyCheckbox.svelte
     {#if indeterminate}
       -
     {:else if checked}
-      
+      ✅
     {:else}
-      
+      ❌
     {/if}
   {/snippet}
 </Checkbox.Root>
@@ -159,6 +163,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   }
 </script>
 <Checkbox.Root bind:checked={getChecked, setChecked}>
+  <!-- ... -->
 </Checkbox.Root>
 ```
 
@@ -197,6 +202,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   }
 </script>
 <Checkbox.Root bind:indeterminate={getIndeterminate, setIndeterminate}>
+  <!-- ... -->
 </Checkbox.Root>
 ```
 
@@ -238,6 +244,7 @@ If you want to make the checkbox required, you can use the `required` prop.
 
 ```svelte
 <Checkbox.Root required>
+  <!-- ... -->
 </Checkbox.Root>
 ```
 
@@ -359,6 +366,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   }
 </script>
 <Checkbox.Group bind:value={getValue, setValue}>
+  <!-- ... -->
 </Checkbox.Group>
 ```
 
@@ -368,6 +376,7 @@ To render hidden `<input />` elements for the various checkboxes within a group,
 
 ```svelte
 <Checkbox.Group name="notifications">
+  <!-- ... -->
 </Checkbox.Group>
 ```
 
@@ -379,59 +388,63 @@ When a `Checkbox.Group` component is used, its descendent `Checkbox.Root` compon
 
 The button component used to toggle the state of the checkbox.
 
-| Property                                                                                        | Type                                                                                                                                                                                                                                                                                                           | Description                                                                                                                                                                                   | Details                                                                                                                                                                                       |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `checked` $bindable | `boolean`                                                                                                                                                                                                                                                                                     | The checkbox button's checked state.`Default: false`                                                                                                                            |                                       |
-| `onCheckedChange`                                             | `function`- (checked: boolean) =\&gt; void                                                                                             | A callback that is fired when the checkbox button's checked state changes.`Default:  undefined`                                                                              |                                       |
-| `indeterminate` $bindable                        | `boolean`                                                                                                                                                                                                                                                                                     | Whether the checkbox is an indeterminate state or not.`Default: false`                                                                                                          |                                       |
-| `onIndeterminateChange`                                       | `function`- (indeterminate: boolean) =\&gt; void                                                                                       | A callback that is fired when the indeterminate state changes.`Default:  undefined`                                                                                          |                                       |
-| `disabled`                                                    | `boolean`                                                                                                                                                                                                                                                                                     | Whether or not the checkbox button is disabled. This prevents the user from interacting with it.`Default: false`                                                                |                                       |
-| `required`                                                    | `boolean`                                                                                                                                                                                                                                                                                     | Whether or not the checkbox is required.`Default: false`                                                                                                                        |                                       |
-| `name`                                                        | `string`                                                                                                                                                                                                                                                                                      | The name of the checkbox. If provided a hidden input will be render to use for form submission. If not provided, the hidden input will not be rendered.`Default:  undefined` |                                       |
-| `value`                                                       | `string`                                                                                                                                                                                                                                                                                      | The value of the checkbox. This is what is submitted with the form when the checkbox is checked.`Default:  undefined`                                                        |                                       |
-| `readonly`                                                    | `boolean`                                                                                                                                                                                                                                                                                     | Whether or not the checkbox is read only. If `true`, the checkbox will be focusable by the user, but will not be able to be checked/unchecked.`Default: false`                  |                                       |
-| `ref` $bindable                                  | `HTMLButtonElement`                                                                                                                                                                                                                                                                           | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                               |                                       |
-| `children`                                                    | `Snippet`- type ChildrenSnippetProps = \&#123; checked: boolean; indeterminate: boolean; \&#125;;                                      | The children content to render.`Default:  undefined`                                                                                                                         |                                       |
-| `child`                                                       | `Snippet`- type ChildSnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; checked: boolean; indeterminate: boolean; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                   |  | | Data Attribute                     | Value                                                                                                                                                                                                                         | Description                                                          | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'checked' \| 'unchecked' \| 'indeterminate' | The checkbox's state of checked, unchecked, or indeterminate. |                                      |
-| `data-disabled`                           | `''`                                                                                                                                                                                                         | Present when the checkbox is disabled.                        |                                      |
-| `data-readonly`                           | `''`                                                                                                                                                                                                         | Present when the checkbox is read only.                       |                                      |
-| `data-checkbox-root`                      | `''`                                                                                                                                                                                                         | Present on the root element.                                  |  |
+| Property                  | Type                                                                                                                 | Description                                                                                                                                                                     | Details |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `checked` $bindable       | `boolean`                                                                                                            | The checkbox button's checked state.`Default: false`                                                                                                                            |         |
+| `onCheckedChange`         | `function` - (checked: boolean) => void                                                                              | A callback that is fired when the checkbox button's checked state changes.`Default:  —— undefined`                                                                              |         |
+| `indeterminate` $bindable | `boolean`                                                                                                            | Whether the checkbox is an indeterminate state or not.`Default: false`                                                                                                          |         |
+| `onIndeterminateChange`   | `function` - (indeterminate: boolean) => void                                                                        | A callback that is fired when the indeterminate state changes.`Default:  —— undefined`                                                                                          |         |
+| `disabled`                | `boolean`                                                                                                            | Whether or not the checkbox button is disabled. This prevents the user from interacting with it.`Default: false`                                                                |         |
+| `required`                | `boolean`                                                                                                            | Whether or not the checkbox is required.`Default: false`                                                                                                                        |         |
+| `name`                    | `string`                                                                                                             | The name of the checkbox. If provided a hidden input will be render to use for form submission. If not provided, the hidden input will not be rendered.`Default:  —— undefined` |         |
+| `value`                   | `string`                                                                                                             | The value of the checkbox. This is what is submitted with the form when the checkbox is checked.`Default:  —— undefined`                                                        |         |
+| `readonly`                | `boolean`                                                                                                            | Whether or not the checkbox is read only. If `true`, the checkbox will be focusable by the user, but will not be able to be checked/unchecked.`Default: false`                  |         |
+| `ref` $bindable           | `HTMLButtonElement`                                                                                                  | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                               |         |
+| `children`                | `Snippet` - type ChildrenSnippetProps = { checked: boolean; indeterminate: boolean; };                               | The children content to render.`Default:  —— undefined`                                                                                                                         |         |
+| `child`                   | `Snippet` - type ChildSnippetProps = { props: Record\<string, unknown>; checked: boolean; indeterminate: boolean; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                   |         |
+
+| Data Attribute       | Value                                                | Description                                                   | Details |
+| -------------------- | ---------------------------------------------------- | ------------------------------------------------------------- | ------- |
+| `data-state`         | `enum` - 'checked' \| 'unchecked' \| 'indeterminate' | The checkbox's state of checked, unchecked, or indeterminate. |         |
+| `data-disabled`      | `''`                                                 | Present when the checkbox is disabled.                        |         |
+| `data-readonly`      | `''`                                                 | Present when the checkbox is read only.                       |         |
+| `data-checkbox-root` | `''`                                                 | Present on the root element.                                  |         |
 
 ### Checkbox.Group
 
 A group that synchronizes its value state with its descendant checkboxes.
 
-| Property                                                                                      | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                      | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value` $bindable | `string[]`                                                                                                                                                                                                                                       | The value of the group. This is an array of the values of the checked checkboxes within the group.`Default: []`                                                                                                    |                                      |
-| `onValueChange`                                             | `function`- (value: string\[]) =\&gt; void                                              | A callback that is fired when the checkbox group's value state changes.`Default:  undefined`                                                                                                                    |                                      |
-| `disabled`                                                  | `boolean`                                                                                                                                                                                                                                        | Whether or not the checkbox group is disabled. If `true`, all checkboxes within the group will be disabled. To disable a specific checkbox in the group, pass the `disabled` prop to the checkbox.`Default: false` |                                      |
-| `required`                                                  | `boolean`                                                                                                                                                                                                                                        | Whether or not the checkbox group is required for form submission.`Default: false`                                                                                                                                 |                                      |
-| `name`                                                      | `string`                                                                                                                                                                                                                                         | The name of the checkbox group. If provided a hidden input will be rendered to use for form submission.`Default:  undefined`                                                                                    |                                      |
-| `readonly`                                                  | `boolean`                                                                                                                                                                                                                                        | Whether or not the checkbox group is read only. If `true`, the group will be focusable by the user, but the checkboxes will not be able to be checked/unchecked.`Default: false`                                   |                                      |
-| `ref` $bindable                                | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                  |                                      |
-| `children`                                                  | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                                                                                            |                                      |
-| `child`                                                     | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                                                      |  | | Data Attribute                        | Value                 | Description                                          | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------ | ------------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-disabled` | `''` | Present when the checkbox group is disabled.  |                                      |
-| `data-checkbox-group`                        | `''` | Present on the group element.                 |                                      |
-| `data-readonly`                              | `''` | Present when the checkbox group is read only. |  |
+| Property          | Type                                                                  | Description                                                                                                                                                                                                        | Details |
+| ----------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `value` $bindable | `string[]`                                                            | The value of the group. This is an array of the values of the checked checkboxes within the group.`Default: []`                                                                                                    |         |
+| `onValueChange`   | `function` - (value: string\[]) => void                               | A callback that is fired when the checkbox group's value state changes.`Default:  —— undefined`                                                                                                                    |         |
+| `disabled`        | `boolean`                                                             | Whether or not the checkbox group is disabled. If `true`, all checkboxes within the group will be disabled. To disable a specific checkbox in the group, pass the `disabled` prop to the checkbox.`Default: false` |         |
+| `required`        | `boolean`                                                             | Whether or not the checkbox group is required for form submission.`Default: false`                                                                                                                                 |         |
+| `name`            | `string`                                                              | The name of the checkbox group. If provided a hidden input will be rendered to use for form submission.`Default:  —— undefined`                                                                                    |         |
+| `readonly`        | `boolean`                                                             | Whether or not the checkbox group is read only. If `true`, the group will be focusable by the user, but the checkboxes will not be able to be checked/unchecked.`Default: false`                                   |         |
+| `ref` $bindable   | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                  |         |
+| `children`        | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                                                                                            |         |
+| `child`           | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                                                      |         |
+
+| Data Attribute        | Value | Description                                   | Details |
+| --------------------- | ----- | --------------------------------------------- | ------- |
+| `data-disabled`       | `''`  | Present when the checkbox group is disabled.  |         |
+| `data-checkbox-group` | `''`  | Present on the group element.                 |         |
+| `data-readonly`       | `''`  | Present when the checkbox group is read only. |         |
 
 ### Checkbox.GroupLabel
 
 An accessible label for the checkbox group.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLLabelElement`                                                                                                                                                                                                                               | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                        | Value                 | Description                                         | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------ | ------------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-disabled` | `''` | Present when the checkbox group is disabled. |                                      |
-| `data-checkbox-group-label`                  | `''` | Present on the label element.                |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLLabelElement`                                                    | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Calendar](/docs/components/calendar)
+| Data Attribute              | Value | Description                                  | Details |
+| --------------------------- | ----- | -------------------------------------------- | ------- |
+| `data-disabled`             | `''`  | Present when the checkbox group is disabled. |         |
+| `data-checkbox-group-label` | `''`  | Present on the label element.                |         |
 
-[Next Collapsible](/docs/components/collapsible)
+[Previous Calendar](/docs/components/calendar) [Next Collapsible](/docs/components/collapsible)

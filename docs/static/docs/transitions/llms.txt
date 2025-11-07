@@ -30,10 +30,12 @@ The `child` snippet exposes a prop that you can use to conditionally render the 
   import { fly } from "svelte/transition";
 </script>
 <Dialog.Root>
+  <!-- ... -->
   <Dialog.Content forceMount>
     {#snippet child({ props, open })}
       {#if open}
         <div {...props} transition:fly>
+          <!-- ... -->
         </div>
       {/if}
     {/snippet}
@@ -92,7 +94,9 @@ Which can then be used alongside the other `Dialog.*` components:
 </Dialog.Root>
 ```
 
-### Floating Content Components `Content` components that rely on Floating UI require a slight modification to how the `child` snippet is used.
+### Floating Content Components
+
+`Content` components that rely on Floating UI require a slight modification to how the `child` snippet is used.
 
 For example, if we were to use the `Popover.Content` component, we need to add a wrapper element within the `child` snippet, and spread the `wrapperProps` snippet prop to it.
 
@@ -109,6 +113,7 @@ For example, if we were to use the `Popover.Content` component, we need to add a
         {#if open}
           <div {...wrapperProps}>
             <div {...props} transition:fly>
+              <!-- ... -->
             </div>
           </div>
         {/if}
@@ -118,6 +123,4 @@ For example, if we were to use the `Popover.Content` component, we need to add a
 </Popover.Root>
 ```
 
-[Previous Ref](/docs/ref)
-
-[Next Styling](/docs/styling)
+[Previous Ref](/docs/ref) [Next Styling](/docs/styling)

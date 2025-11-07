@@ -94,18 +94,20 @@ The Accordion component is a versatile UI element designed to organize content i
 
 ## Key Features
 
-- **Single or Multiple Mode**: Toggle between allowing one open section or multiple sections at once.  
-- **Accessible by Default**: Built-in ARIA attributes and keyboard navigation support.  
-- **Smooth Transitions**: Leverage CSS variables or Svelte transitions for animated open/close effects.  
-- **Flexible State**: Use uncontrolled defaults or take full control with bound values. ## Structure
+- **Single or Multiple Mode**: Toggle between allowing one open section or multiple sections at once.
+- **Accessible by Default**: Built-in ARIA attributes and keyboard navigation support.
+- **Smooth Transitions**: Leverage CSS variables or Svelte transitions for animated open/close effects.
+- **Flexible State**: Use uncontrolled defaults or take full control with bound values.
+
+## Structure
 
 The Accordion is a compound component made up of several parts:
 
-- `Accordion.Root` : Container that manages overall state
-- `Accordion.Item` : Individual collapsible section
-- `Accordion.Header` : Contains the visible heading
-- `Accordion.Trigger` : The clickable element that toggles content visibility
-- `Accordion.Content` : The collapsible body content
+- `Accordion.Root`: Container that manages overall state
+- `Accordion.Item`: Individual collapsible section
+- `Accordion.Header`: Contains the visible heading
+- `Accordion.Trigger`: The clickable element that toggles content visibility
+- `Accordion.Content`: The collapsible body content
 
 ## Reusable Components
 
@@ -161,7 +163,11 @@ MyAccordion.svelte
     items: Item[];
   } = $props();
 </script>
-
+<!--
+ Since we have to destructure the `value` to make it `$bindable`, we need to use `as any` here to avoid
+ type errors from the discriminated union of `"single" | "multiple"`.
+ (an unfortunate consequence of having to destructure bindable values)
+  -->
 <Accordion.Root bind:value bind:ref {...restProps as any}>
   {#each items as item, i (item.title + i)}
     <MyAccordionItem {...item} />
@@ -211,10 +217,13 @@ Use `bind:value` for simple, automatic state synchronization:
 </button>
 <Accordion.Root type="multiple" bind:value={myValue}>
   <Accordion.Item value="item-1">
+    <!-- ... -->
   </Accordion.Item>
   <Accordion.Item value="item-2">
+    <!-- ... -->
   </Accordion.Item>
   <Accordion.Item value="item-3">
+    <!-- ... -->
   </Accordion.Item>
 </Accordion.Root>
 ```
@@ -235,6 +244,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   }
 </script>
 <Accordion.Root type="single" bind:value={getValue, setValue}>
+  <!-- ... -->
 </Accordion.Root>
 ```
 
@@ -285,6 +295,7 @@ Disable specific items with the `disabled` prop:
 ```svelte
 <Accordion.Root type="single">
   <Accordion.Item value="item-1" disabled>
+    <!-- ... -->
   </Accordion.Item>
 </Accordion.Root>
 ```
@@ -333,7 +344,7 @@ In this example:
 - The `forceMount` prop ensures the components are always in the DOM.
 - The `child` snippet provides access to the open state and component props.
 - Svelte's `#if` block controls when the content is visible.
-- Transition directives ( `transition:fade` and `transition:fly` ) apply the animations.
+- Transition directives (`transition:fade` and `transition:fly`) apply the animations.
 
 Expand Code
 
@@ -435,6 +446,7 @@ You can then use the `MyAccordionContent` component alongside the other `Accordi
       <Accordion.Trigger>A</Accordion.Trigger>
     </Accordion.Header>
     <MyAccordionContent duration={300}>
+      <!-- ... -->
     </MyAccordionContent>
   </Accordion.Item>
 </Accordion.Root>
@@ -554,7 +566,7 @@ Expand Code
           isCompleted ? "text-foreground" : "text-muted-foreground"
         )}
       >
-        {isCompleted ? "" : value}
+        {isCompleted ? "✓" : value}
       </div>
       <span class="w-full text-left">
         {title}
@@ -706,90 +718,98 @@ Expand Code
 
 The root accordion component used to set and manage the state of the accordion.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                                     | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` required | `enum`- 'single' \| 'multiple'                                                          | The type of accordion. If set to `'multiple'`, the accordion will allow multiple items to be open at the same time. If set to `single`, the accordion will only allow a single item to be open.`Default:  undefined`           |                                      |
-| `value` $bindable                            | `union`- string\[] \| string                                                            | The value of the currently active accordion item. If `type` is `'single'`, this should be a string. If `type` is `'multiple'`, this should be an array of strings.`Default:  undefined`                                        |                                      |
-| `onValueChange`                                           | `function`- string \| string\[]                                                         | A callback function called when the active accordion item value changes. If the `type` is `'single'`, the argument will be a string. If `type` is `'multiple'`, the argument will be an array of strings.`Default:  undefined` |                                      |
-| `disabled`                                                | `boolean`                                                                                                                                                                                                                                        | Whether or not the accordion is disabled. When disabled, the accordion cannot be interacted with.`Default: false`                                                                                                                 |                                      |
-| `loop`                                                    | `boolean`                                                                                                                                                                                                                                        | Whether or not the accordion should loop through items when reaching the end.`Default: false`                                                                                                                                     |                                      |
-| `orientation`                                             | `enum`- 'vertical' \| 'horizontal'                                                      | The orientation of the accordion.`Default: 'vertical'`                                                                                                                                                                            |                                      |
-| `ref` $bindable                              | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                 |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                                                                                                           |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                                                                     |  | | Data Attribute                           | Value                                                                                                                                                                                                        | Description                                    | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-orientation` | `enum`- 'vertical' \| 'horizontal' | The orientation of the component.       |                                      |
-| `data-disabled`                                 | `''`                                                                                                                                                                                        | Present when the component is disabled. |                                      |
-| `data-accordion-root`                           | `''`                                                                                                                                                                                        | Present on the root element.            |  |
+| Property          | Type                                                                  | Description                                                                                                                                                                                                                       | Details |
+| ----------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `type` required   | `enum` - 'single' \| 'multiple'                                       | The type of accordion. If set to `'multiple'`, the accordion will allow multiple items to be open at the same time. If set to `single`, the accordion will only allow a single item to be open.`Default:  —— undefined`           |         |
+| `value` $bindable | `union` - string\[] \| string                                         | The value of the currently active accordion item. If `type` is `'single'`, this should be a string. If `type` is `'multiple'`, this should be an array of strings.`Default:  —— undefined`                                        |         |
+| `onValueChange`   | `function` - string \| string\[]                                      | A callback function called when the active accordion item value changes. If the `type` is `'single'`, the argument will be a string. If `type` is `'multiple'`, the argument will be an array of strings.`Default:  —— undefined` |         |
+| `disabled`        | `boolean`                                                             | Whether or not the accordion is disabled. When disabled, the accordion cannot be interacted with.`Default: false`                                                                                                                 |         |
+| `loop`            | `boolean`                                                             | Whether or not the accordion should loop through items when reaching the end.`Default: false`                                                                                                                                     |         |
+| `orientation`     | `enum` - 'vertical' \| 'horizontal'                                   | The orientation of the accordion.`Default: 'vertical'`                                                                                                                                                                            |         |
+| `ref` $bindable   | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                 |         |
+| `children`        | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                                                                                                           |         |
+| `child`           | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                                                                     |         |
+
+| Data Attribute        | Value                               | Description                             | Details |
+| --------------------- | ----------------------------------- | --------------------------------------- | ------- |
+| `data-orientation`    | `enum` - 'vertical' \| 'horizontal' | The orientation of the component.       |         |
+| `data-disabled`       | `''`                                | Present when the component is disabled. |         |
+| `data-accordion-root` | `''`                                | Present on the root element.            |         |
 
 ### Accordion.Item
 
 An accordion item.
 
-| Property                                                                  | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                          | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `disabled` | `boolean`                                                                                                                                                                                                                                        | Whether or not the accordion item is disabled.`Default: false`                                                                                                                         |                                      |
-| `value`                                 | `string`                                                                                                                                                                                                                                         | The value of the accordion item. This is used to identify when the item is open or closed. If not provided, a unique ID will be generated for this value.`Default: A random unique ID` |                                      |
-| `ref` $bindable            | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                      |                                      |
-| `children`                              | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                                                                |                                      |
-| `child`                                 | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                          |  | | Data Attribute                     | Value                                                                                                                                                                                                        | Description                                          | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'open' \| 'closed'         | Whether the accordion item is open or closed. |                                      |
-| `data-disabled`                           | `''`                                                                                                                                                                                        | Present when the component is disabled.       |                                      |
-| `data-orientation`                        | `enum`- 'vertical' \| 'horizontal' | The orientation of the component.             |                                      |
-| `data-accordion-item`                     | `''`                                                                                                                                                                                        | Present on the item element.                  |  |
+| Property        | Type                                                                  | Description                                                                                                                                                                            | Details |
+| --------------- | --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `disabled`      | `boolean`                                                             | Whether or not the accordion item is disabled.`Default: false`                                                                                                                         |         |
+| `value`         | `string`                                                              | The value of the accordion item. This is used to identify when the item is open or closed. If not provided, a unique ID will be generated for this value.`Default: A random unique ID` |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                      |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                                                                |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                          |         |
+
+| Data Attribute        | Value                               | Description                                   | Details |
+| --------------------- | ----------------------------------- | --------------------------------------------- | ------- |
+| `data-state`          | `enum` - 'open' \| 'closed'         | Whether the accordion item is open or closed. |         |
+| `data-disabled`       | `''`                                | Present when the component is disabled.       |         |
+| `data-orientation`    | `enum` - 'vertical' \| 'horizontal' | The orientation of the component.             |         |
+| `data-accordion-item` | `''`                                | Present on the item element.                  |         |
 
 ### Accordion.Header
 
 The header of the accordion item.
 
-| Property                                                               | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `level` | `union`- 1 \| 2 \| 3 \| 4 \| 5 \| 6                                                     | The heading level of the header. This will be set as the `aria-level` attribute.`Default: 3`                                                  |                                      |
-| `ref` $bindable         | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                           | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                              | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                           | Value                                                                                                                                                                                                                    | Description                                    | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-orientation` | `enum`- 'vertical' \| 'horizontal'             | The orientation of the component.       |                                      |
-| `data-disabled`                                 | `''`                                                                                                                                                                                                    | Present when the component is disabled. |                                      |
-| `data-heading-level`                            | `enum`- '1' \| '2' \| '3' \| '4' \| '5' \| '6' | The heading level of the element.       |                                      |
-| `data-accordion-header`                         | `''`                                                                                                                                                                                                    | Present on the header element.          |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `level`         | `union` - 1 \| 2 \| 3 \| 4 \| 5 \| 6                                  | The heading level of the header. This will be set as the `aria-level` attribute.`Default: 3`                                                  |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute          | Value                                           | Description                             | Details |
+| ----------------------- | ----------------------------------------------- | --------------------------------------- | ------- |
+| `data-orientation`      | `enum` - 'vertical' \| 'horizontal'             | The orientation of the component.       |         |
+| `data-disabled`         | `''`                                            | Present when the component is disabled. |         |
+| `data-heading-level`    | `enum` - '1' \| '2' \| '3' \| '4' \| '5' \| '6' | The heading level of the element.       |         |
+| `data-accordion-header` | `''`                                            | Present on the header element.          |         |
 
 ### Accordion.Trigger
 
 The button responsible for toggling the accordion item.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLButtonElement`                                                                                                                                                                                                                              | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                           | Value                                                                                                                                                                                                        | Description                                    | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-orientation` | `enum`- 'vertical' \| 'horizontal' | The orientation of the component.       |                                      |
-| `data-disabled`                                 | `''`                                                                                                                                                                                        | Present when the component is disabled. |                                      |
-| `data-accordion-trigger`                        | `''`                                                                                                                                                                                        | Present on the trigger element.         |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLButtonElement`                                                   | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute           | Value                               | Description                             | Details |
+| ------------------------ | ----------------------------------- | --------------------------------------- | ------- |
+| `data-orientation`       | `enum` - 'vertical' \| 'horizontal' | The orientation of the component.       |         |
+| `data-disabled`          | `''`                                | Present when the component is disabled. |         |
+| `data-accordion-trigger` | `''`                                | Present on the trigger element.         |         |
 
 ### Accordion.Content
 
 The accordion item content, which is displayed when the item is open.
 
-| Property                                                                    | Type                                                                                                                                                                                                                                                                             | Description                                                                                                                                                                                                                  | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `forceMount` | `boolean`                                                                                                                                                                                                                                                       | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false`                                             |                                      |
-| `hiddenUntilFound`                        | `boolean`                                                                                                                                                                                                                                                       | Whether the content should use `hidden='until-found'` when closed. This allows browsers to search within collapsed content and automatically expand the accordion item when matches are found.`Default: false` |                                      |
-| `ref` $bindable              | `HTMLDivElement`                                                                                                                                                                                                                                                | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                              |                                      |
-| `children`                                | `Snippet`                                                                                                                                                                                                                                                       | The children content to render.`Default:  undefined`                                                                                                                                                        |                                      |
-| `child`                                   | `Snippet`- type SnippetProps = \&#123; open: boolean; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                                                  |  | | Data Attribute                           | Value                                                                                                                                                                                                        | Description                                    | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-orientation` | `enum`- 'vertical' \| 'horizontal' | The orientation of the component.       |                                      |
-| `data-disabled`                                 | `''`                                                                                                                                                                                        | Present when the component is disabled. |                                      |
-| `data-accordion-content`                        | `''`                                                                                                                                                                                        | Present on the content element.         |  |
+| Property           | Type                                                                                 | Description                                                                                                                                                                                                    | Details |
+| ------------------ | ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `forceMount`       | `boolean`                                                                            | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false`                                             |         |
+| `hiddenUntilFound` | `boolean`                                                                            | Whether the content should use `hidden='until-found'` when closed. This allows browsers to search within collapsed content and automatically expand the accordion item when matches are found.`Default: false` |         |
+| `ref` $bindable    | `HTMLDivElement`                                                                     | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                              |         |
+| `children`         | `Snippet`                                                                            | The children content to render.`Default:  —— undefined`                                                                                                                                                        |         |
+| `child`            | `Snippet` - type SnippetProps = { open: boolean; props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                                                  |         |
 
-| CSS Variable                                            | Description                                                         | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--bits-accordion-content-height` | The height of the accordion content element. |                                      |
-| `--bits-accordion-content-width`                               | The width of the accordion content element.  |  |
+| Data Attribute           | Value                               | Description                             | Details |
+| ------------------------ | ----------------------------------- | --------------------------------------- | ------- |
+| `data-orientation`       | `enum` - 'vertical' \| 'horizontal' | The orientation of the component.       |         |
+| `data-disabled`          | `''`                                | Present when the component is disabled. |         |
+| `data-accordion-content` | `''`                                | Present on the content element.         |         |
 
-[Previous LLMs](/docs/llms)
+| CSS Variable                      | Description                                  | Details |
+| --------------------------------- | -------------------------------------------- | ------- |
+| `--bits-accordion-content-height` | The height of the accordion content element. |         |
+| `--bits-accordion-content-width`  | The width of the accordion content element.  |         |
 
-[Next Alert Dialog](/docs/components/alert-dialog)
+[Previous LLMs](/docs/llms) [Next Alert Dialog](/docs/components/alert-dialog)

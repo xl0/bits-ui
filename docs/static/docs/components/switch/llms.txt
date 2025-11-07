@@ -30,15 +30,19 @@ The Switch component provides an intuitive and accessible toggle control, allowi
 
 ## Key Features
 
-- **Accessibility**: Built with WAI-ARIA guidelines in mind, ensuring keyboard navigation and screen reader support.  
-- **State Management**: Internally manages the on/off state, with options for controlled and uncontrolled usage.  
-- **Style-able**: Data attributes allow for smooth transitions between states and custom styles.  
-- **HTML Forms**: Can render a hidden input element for form submissions. ## Architecture
+- **Accessibility**: Built with WAI-ARIA guidelines in mind, ensuring keyboard navigation and screen reader support.
+- **State Management**: Internally manages the on/off state, with options for controlled and uncontrolled usage.
+- **Style-able**: Data attributes allow for smooth transitions between states and custom styles.
+- **HTML Forms**: Can render a hidden input element for form submissions.
+
+## Architecture
 
 The Switch component is composed of two main parts:
 
-- **Root**: The main container component that manages the state and behavior of the switch.  
-- **Thumb**: The "movable" part of the switch that indicates the current state. ## Structure
+- **Root**: The main container component that manages the state and behavior of the switch.
+- **Thumb**: The "movable" part of the switch that indicates the current state.
+
+## Structure
 
 Here's an overview of how the Switch component is structured in code:
 
@@ -121,6 +125,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   }
 </script>
 <Switch.Root bind:checked={getChecked, setChecked}>
+  <!-- ... -->
 </Switch.Root>
 ```
 
@@ -130,6 +135,7 @@ You can disable the switch by setting the `disabled` prop to `true`.
 
 ```svelte
 <Switch.Root disabled>
+  <!-- ...-->
 </Switch.Root>
 ```
 
@@ -141,6 +147,7 @@ By default, the input will be submitted with the default checkbox value of `'on'
 
 ```svelte
 <Switch.Root name="dnd">
+  <!-- ... -->
 </Switch.Root>
 ```
 
@@ -152,6 +159,7 @@ For example, if you wanted to submit a string value, you could do the following:
 
 ```svelte
 <Switch.Root name="dnd" value="hello">
+  <!-- ... -->
   <Switch.Thumb />
 </Switch.Root>
 ```
@@ -162,6 +170,7 @@ If you want to make the switch required, you can use the `required` prop.
 
 ```svelte
 <Switch.Root required>
+  <!-- ... -->
 </Switch.Root>
 ```
 
@@ -173,37 +182,39 @@ This will apply the `required` attribute to the hidden input element, ensuring t
 
 The root switch component used to set and manage the state of the switch.
 
-| Property                                                                                        | Type                                                                                                                                                                                                                                                                                   | Description                                                                                                                                                 | Details                                                                                                                                                                                      |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `checked` $bindable | `boolean`                                                                                                                                                                                                                                                             | The checked state of the checkbox.`Default: false`                                                                                            |                                      |
-| `onCheckedChange`                                             | `function`- (checked: boolean) =\&gt; void                                                                     | A callback that is fired when the checked state changes.`Default:  undefined`                                                              |                                      |
-| `disabled`                                                    | `boolean`                                                                                                                                                                                                                                                             | Whether or not the switch is disabled.`Default: false`                                                                                        |                                      |
-| `name`                                                        | `string`                                                                                                                                                                                                                                                              | The name of the hidden input element, used to identify the input in form submissions.`Default:  undefined`                                 |                                      |
-| `required`                                                    | `boolean`                                                                                                                                                                                                                                                             | Whether or not the switch is required to be checked.`Default: false`                                                                          |                                      |
-| `value`                                                       | `string`                                                                                                                                                                                                                                                              | The value of the hidden input element to be used in form submissions when the switch is checked.`Default:  undefined`                      |                                      |
-| `ref` $bindable                                  | `HTMLButtonElement`                                                                                                                                                                                                                                                   | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                    | `Snippet`- type ChildrenSnippetProps = \&#123; checked: boolean; \&#125;;                                      | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                       | `Snippet`- type ChildSnippetProps = \&#123; checked: boolean; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                     | Value                                                                                                                                                                                                    | Description                                 | Details                                                                                                                                                                                      |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'checked' \| 'unchecked' | The switch's checked state.          |                                      |
-| `data-checked`                            | `''`                                                                                                                                                                                    | Present when the switch is checked.  |                                      |
-| `data-disabled`                           | `''`                                                                                                                                                                                    | Present when the switch is disabled. |                                      |
-| `data-switch-root`                        | `''`                                                                                                                                                                                    | Present on the root element.         |  |
+| Property            | Type                                                                                         | Description                                                                                                                                   | Details |
+| ------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `checked` $bindable | `boolean`                                                                                    | The checked state of the checkbox.`Default: false`                                                                                            |         |
+| `onCheckedChange`   | `function` - (checked: boolean) => void                                                      | A callback that is fired when the checked state changes.`Default:  —— undefined`                                                              |         |
+| `disabled`          | `boolean`                                                                                    | Whether or not the switch is disabled.`Default: false`                                                                                        |         |
+| `name`              | `string`                                                                                     | The name of the hidden input element, used to identify the input in form submissions.`Default:  —— undefined`                                 |         |
+| `required`          | `boolean`                                                                                    | Whether or not the switch is required to be checked.`Default: false`                                                                          |         |
+| `value`             | `string`                                                                                     | The value of the hidden input element to be used in form submissions when the switch is checked.`Default:  —— undefined`                      |         |
+| `ref` $bindable     | `HTMLButtonElement`                                                                          | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`          | `Snippet` - type ChildrenSnippetProps = { checked: boolean; };                               | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`             | `Snippet` - type ChildSnippetProps = { checked: boolean; props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute     | Value                             | Description                          | Details |
+| ------------------ | --------------------------------- | ------------------------------------ | ------- |
+| `data-state`       | `enum` - 'checked' \| 'unchecked' | The switch's checked state.          |         |
+| `data-checked`     | `''`                              | Present when the switch is checked.  |         |
+| `data-disabled`    | `''`                              | Present when the switch is disabled. |         |
+| `data-switch-root` | `''`                              | Present on the root element.         |         |
 
 ### Switch.Thumb
 
 The thumb on the switch used to indicate the switch's state.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                                                   | Description                                                                                                                                                 | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLSpanElement`                                                                                                                                                                                                                                                     | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`- type ChildrenSnippetProps = \&#123; checked: boolean; \&#125;;                                      | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type ChildSnippetProps = \&#123; checked: boolean; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                     | Value                                                                                                                                                                                                    | Description                                | Details                                                                                                                                                                                      |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'checked' \| 'unchecked' | The switch's checked state.         |                                      |
-| `data-checked`                            | `''`                                                                                                                                                                                    | Present when the switch is checked. |                                      |
-| `data-switch-thumb`                       | `''`                                                                                                                                                                                    | Present on the thumb element.       |  |
+| Property        | Type                                                                                         | Description                                                                                                                                   | Details |
+| --------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLSpanElement`                                                                            | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet` - type ChildrenSnippetProps = { checked: boolean; };                               | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type ChildSnippetProps = { checked: boolean; props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Slider](/docs/components/slider)
+| Data Attribute      | Value                             | Description                         | Details |
+| ------------------- | --------------------------------- | ----------------------------------- | ------- |
+| `data-state`        | `enum` - 'checked' \| 'unchecked' | The switch's checked state.         |         |
+| `data-checked`      | `''`                              | Present when the switch is checked. |         |
+| `data-switch-thumb` | `''`                              | Present on the thumb element.       |         |
 
-[Next Tabs](/docs/components/tabs)
+[Previous Slider](/docs/components/slider) [Next Tabs](/docs/components/tabs)

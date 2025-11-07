@@ -120,9 +120,9 @@ All Bits UI components that render an element accept a style prop as either a st
 
 ```svelte
 <Accordion.Trigger style="background-color: #3182ce; color: white; padding: 1rem;">
- Click me
+	Click me
 </Accordion.Trigger>
-
+<!-- Or using an object -->
 <Accordion.Trigger
   style={{ backgroundColor: "#3182ce", color: "white", padding: "1rem" }}
 >
@@ -366,6 +366,4 @@ Here's an example of an accordion with a custom transition:
 </style>
 ```
 
-[Previous Transitions](/docs/transitions)
-
-[Next Dates](/docs/dates)
+[Previous Transitions](/docs/transitions) [Next Dates](/docs/dates)

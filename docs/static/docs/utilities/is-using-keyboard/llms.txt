@@ -6,7 +6,9 @@ This is a documentation section that potentially contains examples, demos, and o
 
 Copy Page
 
-## Overview `IsUsingKeyboard` is a utility component that tracks whether the user is actively using the keyboard or not. This component is used internally by Bits UI components to provide keyboard accessibility features.
+## Overview
+
+`IsUsingKeyboard` is a utility component that tracks whether the user is actively using the keyboard or not. This component is used internally by Bits UI components to provide keyboard accessibility features.
 
 It provides global state that is shared across all instances of the class to prevent duplicate event listener registration.
 
@@ -20,6 +22,4 @@ It provides global state that is shared across all instances of the class to pre
 </script>
 ```
 
-[Previous BitsConfig](/docs/utilities/bits-config)
-
-[Next mergeProps](/docs/utilities/merge-props)
+[Previous BitsConfig](/docs/utilities/bits-config) [Next mergeProps](/docs/utilities/merge-props)

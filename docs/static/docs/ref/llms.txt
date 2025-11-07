@@ -61,6 +61,7 @@ When you need to use a custom `id` on the element, pass it to the parent compone
 </script>
 <Accordion.Trigger bind:ref={triggerRef} id={myCustomId}>
   {#snippet child({ props })}
+    <!-- The custom ID will be included in props -->
     <CustomButton {...props} />
   {/snippet}
 </Accordion.Trigger>
@@ -71,6 +72,7 @@ When you need to use a custom `id` on the element, pass it to the parent compone
 Avoid setting the `id` directly on the child component/element, as this breaks the connection between the `ref` binding and the element:
 
 ```svelte
+<!-- ❌ This won't work correctly -->
 <Accordion.Trigger bind:ref={triggerRef}>
   {#snippet child({ props })}
     <CustomButton {...props} id="my-custom-id" />
@@ -110,6 +112,4 @@ To implement the same ref pattern in your custom components, Bits UI provides a 
 </button>
 ```
 
-[Previous Child Snippet](/docs/child-snippet)
-
-[Next Transitions](/docs/transitions)
+[Previous Child Snippet](/docs/child-snippet) [Next Transitions](/docs/transitions)
