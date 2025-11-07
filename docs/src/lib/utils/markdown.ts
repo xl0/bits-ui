@@ -1,6 +1,9 @@
-export function parseMarkdown(text: string) {
+
+// 
+export function parseMarkdown(text: string, codeFontSize: number | undefined = 12) {
+	const codeClass = codeFontSize ? `text-[${codeFontSize}px]!` : '';
 	return text
-		.replace(/`([^`]+)`/g, "<Code neutral class='text-[12px]!'>$1</Code>")
+		.replace(/`([^`]+)`/g, `<Code neutral class='${codeClass}'>$1</Code>`)
 		.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
 		.replace(/\*([^*]+)\*/g, "<em>$1</em>")
 		.replace(/_([^_]+)_/g, "<em>$1</em>")

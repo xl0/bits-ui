@@ -8,6 +8,7 @@
 	import { page } from "$app/state";
 	import Check from "phosphor-svelte/lib/Check";
 	import CopyPageDropdown from "./copy-page-dropdown.svelte";
+	import { parseMarkdown } from "$lib/utils/markdown.js";
 
 	let { metadata }: { metadata: DocMetadata } = $props();
 
@@ -28,7 +29,7 @@
 		<span aria-hidden="true" class="hidden"> Documentation </span>
 	</PageHeaderHeading>
 	<PageHeaderDescription class={metadata.llms ? "" : "mb-11"}
-		>{metadata.description}</PageHeaderDescription
+		>{@html parseMarkdown(metadata.description, undefined)}</PageHeaderDescription
 	>
 	{#if metadata.llms}
 		<span aria-hidden="true" class="hidden">
