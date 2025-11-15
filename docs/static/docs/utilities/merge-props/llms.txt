@@ -6,17 +6,21 @@ This is a documentation section that potentially contains examples, demos, and o
 
 Copy Page
 
-## Overview `mergeProps` is a utility function designed to merge multiple props objects. It's particularly useful for composing components with different prop sets or extending the functionality of existing components.
+## Overview
+
+`mergeProps` is a utility function designed to merge multiple props objects. It's particularly useful for composing components with different prop sets or extending the functionality of existing components.
 
 It is used internally by Bits UI components to merge the custom `restProps` you pass to a component with the props that Bits UI provides to the component.
 
 ## Key Features
 
-- Merges multiple props objects  
-- Chains event handlers with cancellation support  
-- Combines class names  
-- Merges style objects and strings  
-- Chains non-event handler functions ## Detailed Behavior
+- Merges multiple props objects
+- Chains event handlers with cancellation support
+- Combines class names
+- Merges style objects and strings
+- Chains non-event handler functions
+
+## Detailed Behavior
 
 ### Event Handlers
 
@@ -88,6 +92,4 @@ const mergedProps = mergeProps(props1, props2);
 console.log(mergedProps.style); // "--foo: green; color: blue;"
 ```
 
-[Previous IsUsingKeyboard](/docs/utilities/is-using-keyboard)
-
-[Next Portal](/docs/utilities/portal)
+[Previous IsUsingKeyboard](/docs/utilities/is-using-keyboard) [Next Portal](/docs/utilities/portal)

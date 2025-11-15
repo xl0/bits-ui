@@ -19,6 +19,4 @@ The `useId` function is a utility function that can be used to generate unique I
 <input {id} />
 ```
 
-[Previous Portal](/docs/utilities/portal)
-
-[Next WithElementRef](/docs/type-helpers/with-element-ref)
+[Previous Portal](/docs/utilities/portal) [Next WithElementRef](/docs/type-helpers/with-element-ref)

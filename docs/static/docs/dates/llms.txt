@@ -24,10 +24,10 @@ Bits UI uses `DateValue` objects from `@internationalized/date` to represent dat
 
 We use the `DateValue` objects provided by `@internationalized/date` to represent dates and times in a consistent way. These objects are immutable and provide information about the type of date they represent. The `DateValue` is a union of the following three types:
 
-| Type                             | Description                 | Example                                                               |
-| ---------------------------------------------- | ------------------------------------------------ | -------------------------------------------------------------------------------------------------------- |
-| `CalendarDate`     | Date without time component | `2024-07-10`                                                   |
-| `CalendarDateTime` | Date with time              | `2024-07-10T12:30:00`                                          |
+| Type               | Description                 | Example                                          |
+| ------------------ | --------------------------- | ------------------------------------------------ |
+| `CalendarDate`     | Date without time component | `2024-07-10`                                     |
+| `CalendarDateTime` | Date with time              | `2024-07-10T12:30:00`                            |
 | `ZonedDateTime`    | Date with time and timezone | `2024-07-10T21:00:00:00-04:00[America/New_York]` |
 
 Using these strongly-typed objects allows components to adapt appropriately to the date type you provide.
@@ -73,7 +73,9 @@ See the [CalendarDateTime API documentation](https://react-spectrum.adobe.com/in
 
 ### ZonedDateTime
 
-Represents a specific date and time in a specific timezone - crucial for events that occur at an exact moment regardless of the user's location (like conferences or live broadcasts). ```ts
+Represents a specific date and time in a specific timezone - crucial for events that occur at an exact moment regardless of the user's location (like conferences or live broadcasts).
+
+```ts
 // Creating a ZonedDateTime
 import {
   ZonedDateTime,
@@ -112,17 +114,17 @@ type DateRange = {
 
 This type is used in components such as:
 
-- [Date Range Field](/docs/components/date-range-field)  
-- [Date Range Picker](/docs/components/date-range-picker)  
-- [Range Calendar](/docs/components/range-calendar) ## Using the Placeholder
+- [Date Range Field](/docs/components/date-range-field)
+- [Date Range Picker](/docs/components/date-range-picker)
+- [Range Calendar](/docs/components/range-calendar)
+
+## Using the Placeholder
 
 Each date/time component in Bits UI has a *bindable* `placeholder` prop that serves multiple important functions:
 
 1. **Starting Point**: Acts as the initial date when no value is selected
-2. 
-   **Type Definition**: Determines what type of date/time to display if value is absent
-3. 
-   **Calendar Navigation**: Controls the visible date range in calendar views
+2. **Type Definition**: Determines what type of date/time to display if value is absent
+3. **Calendar Navigation**: Controls the visible date range in calendar views
 
 ### Example: Using Placeholder with Calendar
 
@@ -138,7 +140,7 @@ Each date/time component in Bits UI has a *bindable* `placeholder` prop that ser
   let placeholder: DateValue = $state(today(getLocalTimeZone()));
   let selectedMonth: number = $state(placeholder.month);
 </script>
-
+<!-- Month selector to control calendar view -->
 <select
   onchange={() => {
     placeholder = placeholder.set({ month: selectedMonth });
@@ -147,8 +149,10 @@ Each date/time component in Bits UI has a *bindable* `placeholder` prop that ser
 >
   <option value={1}>January</option>
   <option value={2}>February</option>
+  <!-- Additional months... -->
 </select>
 <Calendar.Root bind:placeholder>
+  <!-- Calendar components... -->
 </Calendar.Root>
 ```
 
@@ -215,19 +219,19 @@ const localDate = parseAbsoluteToLocal("2024-07-12T07:45:00Z"); // ZonedDateTime
 ## Common Gotchas and Tips
 
 - **Month Indexing**: Unlike JavaScript's Date object (which is 0-indexed), `@internationalized/date` uses 1-indexed months (January = 1).
-- **Immutability**: Always reassign when modifying date objects: `date = date.add({ days: 1 })` .
+- **Immutability**: Always reassign when modifying date objects: `date = date.add({ days: 1 })`.
 - **Timezone Handling**: Use `ZonedDateTime` for schedule-critical events like meetings or appointments.
-- **Type Consistency**: Match `placeholder` types to your needs - if you need time selection, use `CalendarDateTime` not `CalendarDate` .
+- **Type Consistency**: Match `placeholder` types to your needs - if you need time selection, use `CalendarDateTime` not `CalendarDate`.
 - **Performance**: Create `DateFormatter` instances once and reuse them rather than creating new instances on each render.
 
 ## Related Resources
 
-- [Date Field](/docs/components/date-field)  
-- [Date Range Field](/docs/components/date-range-field)  
-- [Date Picker](/docs/components/date-picker)  
-- [Date Range Picker](/docs/components/date-range-picker)  
-- [Calendar](/docs/components/calendar)  
-- [Range Calendar](/docs/components/range-calendar)  
-- [@internationalized/date documentation](https://react-spectrum.adobe.com/internationalized/date/index.html) [Previous Styling](/docs/styling)
+- [Date Field](/docs/components/date-field)
+- [Date Range Field](/docs/components/date-range-field)
+- [Date Picker](/docs/components/date-picker)
+- [Date Range Picker](/docs/components/date-range-picker)
+- [Calendar](/docs/components/calendar)
+- [Range Calendar](/docs/components/range-calendar)
+- [@internationalized/date documentation](https://react-spectrum.adobe.com/internationalized/date/index.html)
 
-[Next State Management](/docs/state-management)
+[Previous Styling](/docs/styling) [Next State Management](/docs/state-management)

@@ -15,8 +15,8 @@ Copy Page
 <Dialog.Root>
   <Dialog.Trigger
     class="rounded-input bg-dark text-background
-   shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
-   inline-flex h-12 items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
+	  shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
+	  inline-flex h-12 items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
   >
     New API key
   </Dialog.Trigger>
@@ -78,23 +78,27 @@ The Dialog component in Bits UI provides a flexible and accessible way to create
 
 ## Key Features
 
-- **Compound Component Structure**: Offers a set of sub-components that work together to create a fully-featured dialog.  
-- **Accessibility**: Built with WAI-ARIA guidelines in mind, ensuring keyboard navigation and screen reader support.  
-- **Customizable**: Each sub-component can be styled and configured independently.  
-- **Portal Support**: Content can be rendered in a portal, ensuring proper stacking context.  
-- **Managed Focus**: Automatically manages focus, with the option to take control if needed.  
-- **Flexible State Management**: Supports both controlled and uncontrolled state, allowing for full control over the dialog's open state. ## Architecture
+- **Compound Component Structure**: Offers a set of sub-components that work together to create a fully-featured dialog.
+- **Accessibility**: Built with WAI-ARIA guidelines in mind, ensuring keyboard navigation and screen reader support.
+- **Customizable**: Each sub-component can be styled and configured independently.
+- **Portal Support**: Content can be rendered in a portal, ensuring proper stacking context.
+- **Managed Focus**: Automatically manages focus, with the option to take control if needed.
+- **Flexible State Management**: Supports both controlled and uncontrolled state, allowing for full control over the dialog's open state.
+
+## Architecture
 
 The Dialog component is composed of several sub-components, each with a specific role:
 
-- **Root**: The main container component that manages the state of the dialog. Provides context for all child components.  
-- **Trigger**: A button that toggles the dialog's open state.  
-- **Portal**: Renders its children in a portal, outside the normal DOM hierarchy.  
-- **Overlay**: A backdrop that sits behind the dialog content.  
-- **Content**: The main container for the dialog's content.  
-- **Title**: Renders the dialog's title.  
-- **Description**: Renders a description or additional context for the dialog.  
-- **Close**: A button that closes the dialog. ## Structure
+- **Root**: The main container component that manages the state of the dialog. Provides context for all child components.
+- **Trigger**: A button that toggles the dialog's open state.
+- **Portal**: Renders its children in a portal, outside the normal DOM hierarchy.
+- **Overlay**: A backdrop that sits behind the dialog content.
+- **Content**: The main container for the dialog's content.
+- **Title**: Renders the dialog's title.
+- **Description**: Renders a description or additional context for the dialog.
+- **Close**: A button that closes the dialog.
+
+## Structure
 
 Here's an overview of how the Dialog component is structured in code:
 
@@ -179,6 +183,7 @@ MyDialog.svelte
   {#snippet description()}
     Manage your account settings and preferences.
   {/snippet}
+  <!-- Additional dialog content here... -->
 </MyDialog>
 ```
 
@@ -195,15 +200,18 @@ MyDialog.svelte
   Manage your account settings and preferences.
 {/snippet}
 <MyDialog buttonText="Open Dialog" {title} {description}>
+  <!-- Additional dialog content here... -->
 </MyDialog>
 ```
 
 ### Best Practices
 
-- **Prop Flexibility**: Design your component to accept props for any nested components for maximum flexibility  
+- **Prop Flexibility**: Design your component to accept props for any nested components for maximum flexibility
 - **Styling Options**: Use tools like `clsx` to merge class overrides
 - **Binding Props**: Use `bind:` and expose `$bindable` props to provide consumers with full control
-- **Type Safety**: Use the exported types from Bits UI to type your component props ## Managing Open State
+- **Type Safety**: Use the exported types from Bits UI to type your component props
+
+## Managing Open State
 
 This section covers how to manage the `open` state of the component.
 
@@ -218,6 +226,7 @@ Use `bind:open` for simple, automatic state synchronization:
 </script>
 <button onclick={() => (isOpen = true)}>Open Dialog</button>
 <Dialog.Root bind:open={isOpen}>
+  <!-- ... -->
 </Dialog.Root>
 ```
 
@@ -237,6 +246,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   }
 </script>
 <Dialog.Root bind:open={getOpen, setOpen}>
+  <!-- ... -->
 </Dialog.Root>
 ```
 
@@ -254,6 +264,7 @@ While not recommended, you can disable the focus trap if absolutely necessary:
 
 ```svelte
 <Dialog.Content trapFocus={false}>
+  <!-- ... -->
 </Dialog.Content>
 ```
 
@@ -313,15 +324,18 @@ To change which element receives focus when the Dialog closes, use the `onCloseA
       nameInput?.focus();
     }}
   >
+    <!-- ... -->
   </Dialog.Content>
 </Dialog.Root>
 ```
 
 ### Best Practices
 
-- Always maintain a clear focus management strategy for your Dialogs.  
-- Ensure that focus is predictable and logical for keyboard users.  
-- Test your focus management with keyboard navigation to verify its effectiveness. ## Advanced Behaviors
+- Always maintain a clear focus management strategy for your Dialogs.
+- Ensure that focus is predictable and logical for keyboard users.
+- Test your focus management with keyboard navigation to verify its effectiveness.
+
+## Advanced Behaviors
 
 Bits UI's Dialog component offers several advanced features to customize its behavior and enhance user experience. This section covers scroll locking, escape key handling, and interaction outside the dialog.
 
@@ -335,6 +349,7 @@ To allow body scrolling while the dialog is open, use the `preventScroll` prop o
 
 ```svelte
 <Dialog.Content preventScroll={false}>
+  <!-- ... -->
 </Dialog.Content>
 ```
 
@@ -346,21 +361,26 @@ Enabling body scroll may affect user focus and accessibility. Use this option ju
 
 By default, pressing the `Escape` key closes an open Dialog. Bits UI provides two methods to customize this behavior.
 
-#### Method 1: `escapeKeydownBehavior` The `escapeKeydownBehavior` prop allows you to customize the behavior taken by the component when the `Escape` key is pressed. It accepts one of the following values:
+#### Method 1: `escapeKeydownBehavior`
+
+The `escapeKeydownBehavior` prop allows you to customize the behavior taken by the component when the `Escape` key is pressed. It accepts one of the following values:
 
 - `'close'` (default): Closes the Dialog immediately.
-- `'ignore'` : Prevents the Dialog from closing.
-- `'defer-otherwise-close'` : If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will close immediately.
-- `'defer-otherwise-ignore'` : If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will ignore the key press and not close.
+- `'ignore'`: Prevents the Dialog from closing.
+- `'defer-otherwise-close'`: If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will close immediately.
+- `'defer-otherwise-ignore'`: If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will ignore the key press and not close.
 
 To always prevent the Dialog from closing on Escape key press, set the `escapeKeydownBehavior` prop to `'ignore'` on `Dialog.Content`:
 
 ```svelte
 <Dialog.Content escapeKeydownBehavior="ignore">
+  <!-- ... -->
 </Dialog.Content>
 ```
 
-#### Method 2: `onEscapeKeydown` For more granular control, override the default behavior using the `onEscapeKeydown` prop:
+#### Method 2: `onEscapeKeydown`
+
+For more granular control, override the default behavior using the `onEscapeKeydown` prop:
 
 ```svelte
 <Dialog.Content
@@ -369,6 +389,7 @@ To always prevent the Dialog from closing on Escape key press, set the `escapeKe
     // do something else instead
   }}
 >
+  <!-- ... -->
 </Dialog.Content>
 ```
 
@@ -378,21 +399,26 @@ This method allows you to implement custom logic when the `Escape` key is presse
 
 By default, interacting outside the Dialog content area closes the Dialog. Bits UI offers two ways to modify this behavior.
 
-#### Method 1: `interactOutsideBehavior` The `interactOutsideBehavior` prop allows you to customize the behavior taken by the component when an interaction (touch, mouse, or pointer event) occurs outside the content. It accepts one of the following values:
+#### Method 1: `interactOutsideBehavior`
+
+The `interactOutsideBehavior` prop allows you to customize the behavior taken by the component when an interaction (touch, mouse, or pointer event) occurs outside the content. It accepts one of the following values:
 
 - `'close'` (default): Closes the Dialog immediately.
-- `'ignore'` : Prevents the Dialog from closing.
-- `'defer-otherwise-close'` : If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will close immediately.
-- `'defer-otherwise-ignore'` : If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will ignore the event and not close.
+- `'ignore'`: Prevents the Dialog from closing.
+- `'defer-otherwise-close'`: If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will close immediately.
+- `'defer-otherwise-ignore'`: If an ancestor Bits UI component also implements this prop, it will defer the closing decision to that component. Otherwise, the Dialog will ignore the event and not close.
 
 To always prevent the Dialog from closing when an interaction occurs outside the content, set the `interactOutsideBehavior` prop to `'ignore'` on `Dialog.Content`:
 
 ```svelte
 <Dialog.Content interactOutsideBehavior="ignore">
+  <!-- ... -->
 </Dialog.Content>
 ```
 
-#### Method 2: `onInteractOutside` For custom handling of outside interactions, you can override the default behavior using the `onInteractOutside` prop:
+#### Method 2: `onInteractOutside`
+
+For custom handling of outside interactions, you can override the default behavior using the `onInteractOutside` prop:
 
 ```svelte
 <Dialog.Content
@@ -401,6 +427,7 @@ To always prevent the Dialog from closing when an interaction occurs outside the
     // do something else instead
   }}
 >
+  <!-- ... -->
 </Dialog.Content>
 ```
 
@@ -408,11 +435,13 @@ This approach allows you to implement specific behaviors when users interact out
 
 ### Best Practices
 
-- **Scroll Lock**: Consider your use case carefully before disabling scroll lock. It may be necessary for dialogs with scrollable content or for specific UX requirements.  
-- **Escape Keydown**: Overriding the default escape key behavior should be done thoughtfully. Users often expect the escape key to close modals.  
-- **Outside Interactions**: Ignoring outside interactions can be useful for important dialogs or multi-step processes, but be cautious not to trap users unintentionally.  
-- **Accessibility**: Always ensure that any customizations maintain or enhance the dialog's accessibility.  
-- **User Expectations**: Try to balance custom behaviors with common UX patterns to avoid confusing users. By leveraging these advanced features, you can create highly customized dialog experiences while maintaining usability and accessibility standards.
+- **Scroll Lock**: Consider your use case carefully before disabling scroll lock. It may be necessary for dialogs with scrollable content or for specific UX requirements.
+- **Escape Keydown**: Overriding the default escape key behavior should be done thoughtfully. Users often expect the escape key to close modals.
+- **Outside Interactions**: Ignoring outside interactions can be useful for important dialogs or multi-step processes, but be cautious not to trap users unintentionally.
+- **Accessibility**: Always ensure that any customizations maintain or enhance the dialog's accessibility.
+- **User Expectations**: Try to balance custom behaviors with common UX patterns to avoid confusing users.
+
+By leveraging these advanced features, you can create highly customized dialog experiences while maintaining usability and accessibility standards.
 
 ## Nested Dialogs
 
@@ -430,8 +459,8 @@ Expand Code
 <Dialog.Root bind:open={rootOpen}>
   <Dialog.Trigger
     class="rounded-input bg-dark text-background
- shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
- inline-flex h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
+	shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
+	inline-flex h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
   >
     Open First Dialog
   </Dialog.Trigger>
@@ -452,8 +481,8 @@ Expand Code
       <Dialog.Root bind:open={nestedOpen}>
         <Dialog.Trigger
           class="rounded-input bg-dark text-background
-    shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
-    inline-flex h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
+				shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
+				inline-flex h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
         >
           Open Second Dialog
         </Dialog.Trigger>
@@ -473,8 +502,8 @@ Expand Code
             </Dialog.Description>
             <Dialog.Close
               class="rounded-input bg-dark text-background
- shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
- inline-flex h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
+	shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden
+	inline-flex h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
             >
               Close Second Dialog
             </Dialog.Close>
@@ -504,13 +533,13 @@ Each dialog provides the following data attributes and CSS variables:
 
 **Data Attributes:**
 
-- `data-nested-open` : Present on `Dialog.Content` and `Dialog.Overlay` when one or more nested dialogs are open within this dialog.
-- `data-nested` : Present on `Dialog.Content` and `Dialog.Overlay` when the dialog is a nested dialog, useful for hiding the overlay of nested dialogs to avoid overlapping with parent dialogs.
+- `data-nested-open`: Present on `Dialog.Content` and `Dialog.Overlay` when one or more nested dialogs are open within this dialog.
+- `data-nested`: Present on `Dialog.Content` and `Dialog.Overlay` when the dialog is a nested dialog, useful for hiding the overlay of nested dialogs to avoid overlapping with parent dialogs.
 
 **CSS Variables:**
 
-- `--bits-dialog-depth` : The nesting depth of the dialog (0 for root, 1 for first nested, etc.).
-- `--bits-dialog-nested-count` : The number of currently open nested dialogs within this dialog (updates reactively).
+- `--bits-dialog-depth`: The nesting depth of the dialog (0 for root, 1 for first nested, etc.).
+- `--bits-dialog-nested-count`: The number of currently open nested dialogs within this dialog (updates reactively).
 
 #### Example: Scale Down Parent Dialogs
 
@@ -520,8 +549,10 @@ Each dialog provides the following data attributes and CSS variables:
   <Dialog.Portal>
     <Dialog.Overlay class="overlay" />
     <Dialog.Content
-      style="transform: scale(calc(1 - var(--bits-dialog-nested-count) * 0.05)); filter: blur(calc(var(--bits-dialog-nested-count) * 2px));"
+      style="transform: scale(calc(1 - var(--bits-dialog-nested-count) * 0.05));
+             filter: blur(calc(var(--bits-dialog-nested-count) * 2px));"
     >
+      <!-- Dialog content -->
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>
@@ -543,10 +574,12 @@ To apply Svelte transitions to Dialog components, use the `forceMount` prop in c
   import { fly, fade } from "svelte/transition";
 </script>
 <Dialog.Root>
+  <!-- ... other dialog components -->
   <Dialog.Overlay forceMount>
     {#snippet child({ props, open })}
       {#if open}
         <div {...props} transition:fade>
+          <!-- ... -->
         </div>
       {/if}
     {/snippet}
@@ -555,6 +588,7 @@ To apply Svelte transitions to Dialog components, use the `forceMount` prop in c
     {#snippet child({ props, open })}
       {#if open}
         <div {...props} transition:fly>
+          <!-- ... -->
         </div>
       {/if}
     {/snippet}
@@ -567,7 +601,7 @@ In this example:
 - The `forceMount` prop ensures the components are always in the DOM.
 - The `child` snippet provides access to the open state and component props.
 - Svelte's `#if` block controls when the content is visible.
-- Transition directives ( `transition:fade` and `transition:fly` ) apply the animations.
+- Transition directives (`transition:fade` and `transition:fly`) apply the animations.
 
 ### Best Practices
 
@@ -613,6 +647,7 @@ You can then use the `MyDialogOverlay` component alongside the other `Dialog` pr
   <Dialog.Portal>
     <MyDialogOverlay duration={300} />
     <Dialog.Content>
+      <!-- ... -->
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>
@@ -628,29 +663,29 @@ This can be done by waiting for the asynchronous action to complete, then progra
 
 ```svelte
 <script lang="ts">
- import { Dialog } from "bits-ui";
- function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
- }
- let open = $state(false);
+	import { Dialog } from "bits-ui";
+	function wait(ms: number) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+	let open = $state(false);
 </script>
 <Dialog.Root bind:open>
- <Dialog.Portal>
-  <Dialog.Overlay />
-  <Dialog.Content>
-   <Dialog.Title>Confirm your action</Dialog.Title>
-   <Dialog.Description>Are you sure you want to do this?</Dialog.Description>
-   <form
-    method="POST"
-    action="?/someAction"
-    onsubmit={() => {
-     wait(1000).then(() => (open = false));
-    }}
-   >
-    <button type="submit">Submit form</Dialog.Action>
-   </form>
-  </Dialog.Content>
- </Dialog.Portal>
+	<Dialog.Portal>
+		<Dialog.Overlay />
+		<Dialog.Content>
+			<Dialog.Title>Confirm your action</Dialog.Title>
+			<Dialog.Description>Are you sure you want to do this?</Dialog.Description>
+			<form
+				method="POST"
+				action="?/someAction"
+				onsubmit={() => {
+					wait(1000).then(() => (open = false));
+				}}
+			>
+				<button type="submit">Submit form</Dialog.Action>
+			</form>
+		</Dialog.Content>
+	</Dialog.Portal>
 </Dialog.Root>
 ```
 
@@ -664,125 +699,135 @@ If you're using a `Dialog` *within* a form, you'll need to ensure that the `Port
 
 The root component used to set and manage the state of the dialog.
 
-| Property                                                                                     | Type                                                                                                                                                                                                            | Description                                                                                                                      | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `open` $bindable | `boolean`                                                                                                                                                                                      | Whether or not the dialog is open.`Default: false`                                                                 |                                      |
-| `onOpenChange`                                             | `function`- (open: boolean) =\&gt; void | A callback function called when the open state changes.`Default:  undefined`                                    |                                      |
-| `onOpenChangeComplete`                                     | `function`- (open: boolean) =\&gt; void | A callback function called after the open state changes and all animations have completed.`Default:  undefined` |                                      |
-| `children`                                                 | `Snippet`                                                                                                                                                                                      | The children content to render.`Default:  undefined`                                                            |  |
+| Property               | Type                                 | Description                                                                                                        | Details |
+| ---------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------- |
+| `open` $bindable       | `boolean`                            | Whether or not the dialog is open.`Default: false`                                                                 |         |
+| `onOpenChange`         | `function` - (open: boolean) => void | A callback function called when the open state changes.`Default:  —— undefined`                                    |         |
+| `onOpenChangeComplete` | `function` - (open: boolean) => void | A callback function called after the open state changes and all animations have completed.`Default:  —— undefined` |         |
+| `children`             | `Snippet`                            | The children content to render.`Default:  —— undefined`                                                            |         |
 
 ### Dialog.Trigger
 
 The element which opens the dialog on press.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                            | Description                                                                                                                                                 | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLButtonElement`                                                                                                                                                                                                                            | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                      | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                              | Value                 | Description                    | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------ | ------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-dialog-trigger` | `''` | Present on the trigger. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLButtonElement`                                                   | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute        | Value | Description             | Details |
+| --------------------- | ----- | ----------------------- | ------- |
+| `data-dialog-trigger` | `''`  | Present on the trigger. |         |
 
 ### Dialog.Portal
 
 A portal which renders the dialog into the body when it is open.
 
-| Property                                                            | Type                                                                                                                                                                                               | Description                                                                                                                                    | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `to` | `union`- Element \| string | Where to render the content when it is open. Defaults to the body.`Default: document.body`                                       |                                      |
-| `disabled`                        | `boolean`                                                                                                                                                                         | Whether the portal is disabled or not. When disabled, the content will be rendered in its original DOM location.`Default: false` |                                      |
-| `children`                        | `Snippet`                                                                                                                                                                         | The children content to render.`Default:  undefined`                                                                          |  |
+| Property   | Type                        | Description                                                                                                                      | Details |
+| ---------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `to`       | `union` - Element \| string | Where to render the content when it is open. Defaults to the body.`Default: document.body`                                       |         |
+| `disabled` | `boolean`                   | Whether the portal is disabled or not. When disabled, the content will be rendered in its original DOM location.`Default: false` |         |
+| `children` | `Snippet`                   | The children content to render.`Default:  —— undefined`                                                                          |         |
 
 ### Dialog.Content
 
 The content displayed within the dialog modal.
 
-| Property                                                                         | Type                                                                                                                                                                                                                                                                                  | Description                                                                                                                                                                                                                                                                                                                                                                                                                                        | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `onEscapeKeydown` | `function`- (event: KeyboardEvent) =\&gt; void                                                                | Callback fired when an escape keydown event occurs in the floating content. You can call `event.preventDefault()` to prevent the default behavior of handling the escape keydown event.`Default:  undefined`                                                                                                                                                                                                                      |                                        |
-| `escapeKeydownBehavior`                        | `enum`- 'close' \| 'ignore' \| 'defer-otherwise-close' \| 'defer-otherwise-ignore'                            | The behavior to use when an escape keydown event occurs in the floating content. `'close'` will close the content immediately. `'ignore'` will prevent the content from closing. `'defer-otherwise-close'` will defer to the parent element if it exists, otherwise it will close the content. `'defer-otherwise-ignore'` will defer to the parent element if it exists, otherwise it will ignore the interaction.`Default: 'close'` |                                        |
-| `onInteractOutside`                            | `function`- (event: PointerEvent) =\&gt; void                                                                 | Callback fired when an outside interaction event occurs, which is a `pointerdown` event. You can call `event.preventDefault()` to prevent the default behavior of handling the outside interaction.`Default:  undefined`                                                                                                                                                                                                          |                                        |
-| `onFocusOutside`                               | `function`- (event: FocusEvent) =\&gt; void                                                                   | Callback fired when focus leaves the dismissible layer. You can call `event.preventDefault()` to prevent the default behavior on focus leaving the layer.`Default:  undefined`                                                                                                                                                                                                                                                    |                                       |
-| `interactOutsideBehavior`                      | `enum`- 'close' \| 'ignore' \| 'defer-otherwise-close' \| 'defer-otherwise-ignore'                          | The behavior to use when an interaction occurs outside of the floating content. `'close'` will close the content immediately. `'ignore'` will prevent the content from closing. `'defer-otherwise-close'` will defer to the parent element if it exists, otherwise it will close the content. `'defer-otherwise-ignore'` will defer to the parent element if it exists, otherwise it will ignore the interaction.`Default: 'close'`  |                                      |
-| `onOpenAutoFocus`                              | `function`- (event: Event) =\&gt; void                                                                      | Event handler called when auto-focusing the content as it is opened. Can be prevented.`Default:  undefined`                                                                                                                                                                                                                                                                                                                       |                                      |
-| `onCloseAutoFocus`                             | `function`- (event: Event) =\&gt; void                                                                      | Event handler called when auto-focusing the content as it is closed. Can be prevented.`Default:  undefined`                                                                                                                                                                                                                                                                                                                       |                                      |
-| `trapFocus`                                    | `boolean`                                                                                                                                                                                                                                                            | Whether or not to trap the focus within the content when open.`Default: true`                                                                                                                                                                                                                                                                                                                                                        |                                      |
-| `forceMount`                                   | `boolean`                                                                                                                                                                                                                                                            | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false`                                                                                                                                                                                                                                                                   |                                      |
-| `preventOverflowTextSelection`                 | `boolean`                                                                                                                                                                                                                                                            | When `true`, prevents the text selection from overflowing the bounds of the element.`Default: true`                                                                                                                                                                                                                                                                                                                                  |                                      |
-| `preventScroll`                                | `boolean`                                                                                                                                                                                                                                                            | When `true`, prevents the body from scrolling when the content is open. This is useful when you want to use the content as a modal.`Default: true`                                                                                                                                                                                                                                                                                   |                                      |
-| `restoreScrollDelay`                           | `number`                                                                                                                                                                                                                                                             | The delay in milliseconds before the scrollbar is restored after closing the dialog. This is only applicable when using the `child` snippet for custom transitions and `preventScroll` and `forceMount` are `true`. You should set this to a value greater than the transition duration to prevent content from shifting during the transition.`Default: 0`                                                                          |                                      |
-| `ref` $bindable                   | `HTMLDivElement`                                                                                                                                                                                                                                                     | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                                                                                                                                                                                                                    |                                      |
-| `children`                                     | `Snippet`                                                                                                                                                                                                                                                            | The children content to render.`Default:  undefined`                                                                                                                                                                                                                                                                                                                                                                              |                                      |
-| `child`                                        | `Snippet`- type ChildSnippetProps = \&#123; open: boolean; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                                                                                                                                                                                                                                                                        |  | | Data Attribute                     | Value                                                                                                                                                                                                | Description                                                                                                                                             | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'open' \| 'closed' | The state of the dialog.                                                                                                                         |                                      |
-| `data-dialog-content`                     | `''`                                                                                                                                                                                | Present on the content.                                                                                                                          |                                      |
-| `data-nested-open`                        | `''`                                                                                                                                                                                | Present when one or more nested dialogs are open within this dialog. Can be used to style parent dialogs differently when children are open.     |                                      |
-| `data-nested`                             | `''`                                                                                                                                                                                | Present when the dialog is a nested dialog, useful for hiding the overlay of nested dialogs to avoid overlapping with the root dialog's overlay. |  |
+| Property                       | Type                                                                                      | Description                                                                                                                                                                                                                                                                                                                                                                                                                          | Details |
+| ------------------------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `onEscapeKeydown`              | `function` - (event: KeyboardEvent) => void                                               | Callback fired when an escape keydown event occurs in the floating content. You can call `event.preventDefault()` to prevent the default behavior of handling the escape keydown event.`Default:  —— undefined`                                                                                                                                                                                                                      |         |
+| `escapeKeydownBehavior`        | `enum` - 'close' \| 'ignore' \| 'defer-otherwise-close' \| 'defer-otherwise-ignore'       | The behavior to use when an escape keydown event occurs in the floating content. `'close'` will close the content immediately. `'ignore'` will prevent the content from closing. `'defer-otherwise-close'` will defer to the parent element if it exists, otherwise it will close the content. `'defer-otherwise-ignore'` will defer to the parent element if it exists, otherwise it will ignore the interaction.`Default: 'close'` |         |
+| `onInteractOutside`            | `function` - (event: PointerEvent) => void                                                | Callback fired when an outside interaction event occurs, which is a `pointerdown` event. You can call `event.preventDefault()` to prevent the default behavior of handling the outside interaction.`Default:  —— undefined`                                                                                                                                                                                                          |         |
+| `onFocusOutside`               | `function` - (event: FocusEvent) => void                                                  | Callback fired when focus leaves the dismissible layer. You can call `event.preventDefault()` to prevent the default behavior on focus leaving the layer.`Default:  —— undefined`                                                                                                                                                                                                                                                    |         |
+| `interactOutsideBehavior`      | `enum` - 'close' \| 'ignore' \| 'defer-otherwise-close' \| 'defer-otherwise-ignore'       | The behavior to use when an interaction occurs outside of the floating content. `'close'` will close the content immediately. `'ignore'` will prevent the content from closing. `'defer-otherwise-close'` will defer to the parent element if it exists, otherwise it will close the content. `'defer-otherwise-ignore'` will defer to the parent element if it exists, otherwise it will ignore the interaction.`Default: 'close'`  |         |
+| `onOpenAutoFocus`              | `function` - (event: Event) => void                                                       | Event handler called when auto-focusing the content as it is opened. Can be prevented.`Default:  —— undefined`                                                                                                                                                                                                                                                                                                                       |         |
+| `onCloseAutoFocus`             | `function` - (event: Event) => void                                                       | Event handler called when auto-focusing the content as it is closed. Can be prevented.`Default:  —— undefined`                                                                                                                                                                                                                                                                                                                       |         |
+| `trapFocus`                    | `boolean`                                                                                 | Whether or not to trap the focus within the content when open.`Default: true`                                                                                                                                                                                                                                                                                                                                                        |         |
+| `forceMount`                   | `boolean`                                                                                 | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false`                                                                                                                                                                                                                                                                   |         |
+| `preventOverflowTextSelection` | `boolean`                                                                                 | When `true`, prevents the text selection from overflowing the bounds of the element.`Default: true`                                                                                                                                                                                                                                                                                                                                  |         |
+| `preventScroll`                | `boolean`                                                                                 | When `true`, prevents the body from scrolling when the content is open. This is useful when you want to use the content as a modal.`Default: true`                                                                                                                                                                                                                                                                                   |         |
+| `restoreScrollDelay`           | `number`                                                                                  | The delay in milliseconds before the scrollbar is restored after closing the dialog. This is only applicable when using the `child` snippet for custom transitions and `preventScroll` and `forceMount` are `true`. You should set this to a value greater than the transition duration to prevent content from shifting during the transition.`Default: 0`                                                                          |         |
+| `ref` $bindable                | `HTMLDivElement`                                                                          | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                                                                                                                                                                                                                    |         |
+| `children`                     | `Snippet`                                                                                 | The children content to render.`Default:  —— undefined`                                                                                                                                                                                                                                                                                                                                                                              |         |
+| `child`                        | `Snippet` - type ChildSnippetProps = { open: boolean; props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                                                                                                                                                                                                                                                                        |         |
 
-| CSS Variable                                | Description                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--bits-dialog-depth` | The nesting depth of the dialog (0 for root dialogs, 1 for first nested, etc.).                                      |                                      |
-| `--bits-dialog-nested-count`                       | The number of currently open nested dialogs within this dialog. Updates reactively as nested dialogs open and close. |  |
+| Data Attribute        | Value                       | Description                                                                                                                                      | Details |
+| --------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `data-state`          | `enum` - 'open' \| 'closed' | The state of the dialog.                                                                                                                         |         |
+| `data-dialog-content` | `''`                        | Present on the content.                                                                                                                          |         |
+| `data-nested-open`    | `''`                        | Present when one or more nested dialogs are open within this dialog. Can be used to style parent dialogs differently when children are open.     |         |
+| `data-nested`         | `''`                        | Present when the dialog is a nested dialog, useful for hiding the overlay of nested dialogs to avoid overlapping with the root dialog's overlay. |         |
+
+| CSS Variable                 | Description                                                                                                          | Details |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------- |
+| `--bits-dialog-depth`        | The nesting depth of the dialog (0 for root dialogs, 1 for first nested, etc.).                                      |         |
+| `--bits-dialog-nested-count` | The number of currently open nested dialogs within this dialog. Updates reactively as nested dialogs open and close. |         |
 
 ### Dialog.Overlay
 
 An overlay which covers the body when the dialog is open.
 
-| Property                                                                    | Type                                                                                                                                                                                                                                                                                  | Description                                                                                                                                                                      | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `forceMount` | `boolean`                                                                                                                                                                                                                                                            | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false` |                                      |
-| `ref` $bindable              | `HTMLDivElement`                                                                                                                                                                                                                                                     | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |                                      |
-| `children`                                | `Snippet`                                                                                                                                                                                                                                                            | The children content to render.`Default:  undefined`                                                                                                            |                                      |
-| `child`                                   | `Snippet`- type ChildSnippetProps = \&#123; open: boolean; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                      |  | | Data Attribute                     | Value                                                                                                                                                                                                | Description                                                                                                                                             | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'open' \| 'closed' | The state of the dialog.                                                                                                                         |                                      |
-| `data-dialog-overlay`                     | `''`                                                                                                                                                                                | Present on the overlay.                                                                                                                          |                                      |
-| `data-nested-open`                        | `''`                                                                                                                                                                                | Present when one or more nested dialogs are open within this dialog. Can be used to style parent dialogs differently when children are open.     |                                      |
-| `data-nested`                             | `''`                                                                                                                                                                                | Present when the dialog is a nested dialog, useful for hiding the overlay of nested dialogs to avoid overlapping with the root dialog's overlay. |  |
+| Property        | Type                                                                                      | Description                                                                                                                                                        | Details |
+| --------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `forceMount`    | `boolean`                                                                                 | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false` |         |
+| `ref` $bindable | `HTMLDivElement`                                                                          | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |         |
+| `children`      | `Snippet`                                                                                 | The children content to render.`Default:  —— undefined`                                                                                                            |         |
+| `child`         | `Snippet` - type ChildSnippetProps = { open: boolean; props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                      |         |
 
-| CSS Variable                                | Description                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--bits-dialog-depth` | The nesting depth of the dialog (0 for root dialogs, 1 for first nested, etc.).                                      |                                      |
-| `--bits-dialog-nested-count`                       | The number of currently open nested dialogs within this dialog. Updates reactively as nested dialogs open and close. |  |
+| Data Attribute        | Value                       | Description                                                                                                                                      | Details |
+| --------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `data-state`          | `enum` - 'open' \| 'closed' | The state of the dialog.                                                                                                                         |         |
+| `data-dialog-overlay` | `''`                        | Present on the overlay.                                                                                                                          |         |
+| `data-nested-open`    | `''`                        | Present when one or more nested dialogs are open within this dialog. Can be used to style parent dialogs differently when children are open.     |         |
+| `data-nested`         | `''`                        | Present when the dialog is a nested dialog, useful for hiding the overlay of nested dialogs to avoid overlapping with the root dialog's overlay. |         |
+
+| CSS Variable                 | Description                                                                                                          | Details |
+| ---------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------- |
+| `--bits-dialog-depth`        | The nesting depth of the dialog (0 for root dialogs, 1 for first nested, etc.).                                      |         |
+| `--bits-dialog-nested-count` | The number of currently open nested dialogs within this dialog. Updates reactively as nested dialogs open and close. |         |
 
 ### Dialog.Close
 
 A button used to close the dialog.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLButtonElement`                                                                                                                                                                                                                              | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                            | Value                 | Description                         | Details                                                                                                                                                                                        |
-| ---------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-dialog-close` | `''` | Present on the close button. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLButtonElement`                                                   | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute      | Value | Description                  | Details |
+| ------------------- | ----- | ---------------------------- | ------- |
+| `data-dialog-close` | `''`  | Present on the close button. |         |
 
 ### Dialog.Title
 
 An accessible title for the dialog.
 
-| Property                                                               | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `level` | `union`- 1 \| 2 \| 3 \| 4 \| 5 \| 6                                                     | The heading level of the title.`Default: 3`                                                                                                   |                                      |
-| `ref` $bindable         | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                           | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                              | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                            | Value                 | Description                  | Details                                                                                                                                                                                        |
-| ---------------------------------------------------------------------------- | ------------------------------------------------- | -------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-dialog-title` | `''` | Present on the title. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `level`         | `union` - 1 \| 2 \| 3 \| 4 \| 5 \| 6                                  | The heading level of the title.`Default: 3`                                                                                                   |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute      | Value | Description           | Details |
+| ------------------- | ----- | --------------------- | ------- |
+| `data-dialog-title` | `''`  | Present on the title. |         |
 
 ### Dialog.Description
 
 An accessible description for the dialog.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                  | Value                 | Description                        | Details                                                                                                                                                                                        |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-dialog-description` | `''` | Present on the description. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Date Range Picker](/docs/components/date-range-picker)
+| Data Attribute            | Value | Description                 | Details |
+| ------------------------- | ----- | --------------------------- | ------- |
+| `data-dialog-description` | `''`  | Present on the description. |         |
 
-[Next Dropdown Menu](/docs/components/dropdown-menu)
+[Previous Date Range Picker](/docs/components/date-range-picker) [Next Dropdown Menu](/docs/components/dropdown-menu)

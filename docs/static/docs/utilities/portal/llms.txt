@@ -72,6 +72,7 @@ Expand Code
     <section class="flex size-12 items-center justify-center bg-blue-200">
       <div class="size-8 bg-blue-400"></div>
       <Portal>
+        <!-- This content will be lifted out of the section and made a child of {target} -->
         <div class="size-12 bg-blue-600"></div>
       </Portal>
     </section>
@@ -85,12 +86,10 @@ Expand Code
 
 Renders the children to a different location in the DOM.
 
-| Property                                                            | Type                                                                                                                                                                                               | Description                                                                                                                                    | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `to` | `union`- Element \| string | Where to render the content when it is open. Defaults to the body.`Default: document.body`                                       |                                      |
-| `disabled`                        | `boolean`                                                                                                                                                                         | Whether the portal is disabled or not. When disabled, the content will be rendered in its original DOM location.`Default: false` |                                      |
-| `children`                        | `Snippet`                                                                                                                                                                         | The children content to render.`Default:  undefined`                                                                          |  |
+| Property   | Type                        | Description                                                                                                                      | Details |
+| ---------- | --------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `to`       | `union` - Element \| string | Where to render the content when it is open. Defaults to the body.`Default: document.body`                                       |         |
+| `disabled` | `boolean`                   | Whether the portal is disabled or not. When disabled, the content will be rendered in its original DOM location.`Default: false` |         |
+| `children` | `Snippet`                   | The children content to render.`Default:  —— undefined`                                                                          |         |
 
-[Previous mergeProps](/docs/utilities/merge-props)
-
-[Next useId](/docs/utilities/use-id)
+[Previous mergeProps](/docs/utilities/merge-props) [Next useId](/docs/utilities/use-id)

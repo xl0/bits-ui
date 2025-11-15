@@ -37,9 +37,9 @@ Copy Page
     {#each items as item (item.index)}
       <RatingGroup.Item index={item.index}>
         {#if item.state === "active"}
-          
+          ⭐
         {:else}
-          
+          ☆
         {/if}
       </RatingGroup.Item>
     {/each}
@@ -124,7 +124,7 @@ Use `bind:value` for simple, automatic state synchronization:
   {#snippet children({ items })}
     {#each items as item (item.index)}
       <RatingGroup.Item index={item.index}>
-        {#if item.state === "active"}{:else}{/if}
+        {#if item.state === "active"}⭐{:else}☆{/if}
       </RatingGroup.Item>
     {/each}
   {/snippet}
@@ -153,7 +153,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   {#snippet children({ items })}
     {#each items as item (item.index)}
       <RatingGroup.Item index={item.index}>
-        {#if item.state === "active"}{:else}{/if}
+        {#if item.state === "active"}⭐{:else}☆{/if}
       </RatingGroup.Item>
     {/each}
   {/snippet}
@@ -166,6 +166,7 @@ If you set the `name` prop on the `RatingGroup.Root` component, a hidden input e
 
 ```svelte
 <RatingGroup.Root name="productRating" max={5}>
+  <!-- ... -->
 </RatingGroup.Root>
 ```
 
@@ -175,6 +176,7 @@ To make the hidden input element `required` you can set the `required` prop on t
 
 ```svelte
 <RatingGroup.Root required max={5}>
+  <!-- ... -->
 </RatingGroup.Root>
 ```
 
@@ -235,6 +237,7 @@ You can make the rating group readonly by setting the `readonly` prop to `true`.
 
 ```svelte
 <RatingGroup.Root readonly value={4.5}>
+  <!-- ... -->
 </RatingGroup.Root>
 ```
 
@@ -244,6 +247,7 @@ You can disable the entire rating group by setting the `disabled` prop to `true`
 
 ```svelte
 <RatingGroup.Root disabled max={5}>
+  <!-- ... -->
 </RatingGroup.Root>
 ```
 
@@ -256,7 +260,7 @@ By default, the rating group shows a preview of the potential rating when hoveri
   {#snippet children({ items })}
     {#each items as item (item.index)}
       <RatingGroup.Item index={item.index}>
-        {#if item.state === "active"}{:else}{/if}
+        {#if item.state === "active"}⭐{:else}☆{/if}
       </RatingGroup.Item>
     {/each}
   {/snippet}
@@ -311,7 +315,7 @@ The rating group automatically adapts to right-to-left (RTL) text direction. Sim
     {#snippet children({ items })}
       {#each items as item (item.index)}
         <RatingGroup.Item index={item.index}>
-          {#if item.state === "active"}{:else}{/if}
+          {#if item.state === "active"}⭐{:else}☆{/if}
         </RatingGroup.Item>
       {/each}
     {/snippet}
@@ -332,7 +336,7 @@ Expand Code
 </script>
 <div class="flex flex-col gap-4" dir="rtl">
   <div class="flex flex-col gap-2">
-    <h3 class="text-sm font-medium">  (RTL)</h3>
+    <h3 class="text-sm font-medium">تقييم بالنجوم (RTL)</h3>
     <p class="text-muted-foreground text-sm">
       Rating group with right-to-left text direction.
     </p>
@@ -359,7 +363,7 @@ Expand Code
     {/snippet}
   </RatingGroup.Root>
   <p class="text-muted-foreground text-sm">
-    : {value}  5 
+    التقييم: {value} من 5 نجوم
   </p>
 </div>
 ```
@@ -389,7 +393,7 @@ The `min` prop sets a minimum required rating value. When set, users cannot sele
   {#snippet children({ items })}
     {#each items as item (item.index)}
       <RatingGroup.Item index={item.index}>
-        {#if item.state === "active"}{:else}{/if}
+        {#if item.state === "active"}⭐{:else}☆{/if}
       </RatingGroup.Item>
     {/each}
   {/snippet}
@@ -408,9 +412,11 @@ The component uses the **slider pattern** rather than a radiogroup pattern, whic
 
 - **Root element**: `role="slider"` with complete ARIA slider attributes
 - **Rating items**: `role="presentation"` to avoid redundant announcements
-- **Value communication**: `aria-valuenow` , `aria-valuemin` , `aria-valuemax` for current state
+- **Value communication**: `aria-valuenow`, `aria-valuemin`, `aria-valuemax` for current state
 - **Custom descriptions**: `aria-valuetext` for contextual rating descriptions
-- **State indicators**: `aria-disabled` , `aria-required` , `aria-orientation` When users navigate with arrow keys, screen readers announce the new rating value immediately, providing real-time feedback.
+- **State indicators**: `aria-disabled`, `aria-required`, `aria-orientation`
+
+When users navigate with arrow keys, screen readers announce the new rating value immediately, providing real-time feedback.
 
 ### Keyboard Navigation Strategy
 
@@ -423,35 +429,44 @@ The most efficient way to set ratings - users can type the exact rating they wan
 - **Integer ratings**: Type `3` to set rating to 3 stars
 - **Half ratings**: Type `2.5` to set 2.5 stars (when `allowHalf` is enabled)
 - **Clear rating**: Type `0` to remove rating (respects minimum constraints)
-- **Input validation**: Invalid numbers are ignored, values are clamped to min/max range #### Arrow Key Navigation
+- **Input validation**: Invalid numbers are ignored, values are clamped to min/max range
+
+#### Arrow Key Navigation
 
 Navigation adapts to both rating precision and text direction:
 
-- **Standard mode**: Arrow keys increment/decrement by 1  
-- **Half rating mode**: Arrow keys increment/decrement by 0.5 for finer control  
-- **RTL support**: Left/right arrows automatically reverse in right-to-left layouts  
-- **Bounds respect**: Navigation stops at min/max values #### Quick Navigation
+- **Standard mode**: Arrow keys increment/decrement by 1
+- **Half rating mode**: Arrow keys increment/decrement by 0.5 for finer control
+- **RTL support**: Left/right arrows automatically reverse in right-to-left layouts
+- **Bounds respect**: Navigation stops at min/max values
 
-- **`Home`**: Jump to minimum rating (or 1 if no minimum set)  
-- **`End`**: Jump to maximum rating  
-- **`PageUp`/`PageDown`**: Increment/decrement by 1 (alternative to arrows) ### Focus Management
+#### Quick Navigation
+
+- **`Home`**: Jump to minimum rating (or 1 if no minimum set)
+- **`End`**: Jump to maximum rating
+- **`PageUp`/`PageDown`**: Increment/decrement by 1 (alternative to arrows)
+
+### Focus Management
 
 The component handles focus intelligently:
 
-- **Mouse interactions**: Clicking a rating item automatically focuses the root slider  
-- **Keyboard focus**: Single tab stop - the entire rating group acts as one focusable unit  
-- **Visual feedback**: Focus styling applied to the root container  
-- **Disabled state**: Component becomes non-focusable when disabled ### Customizing Accessibility
+- **Mouse interactions**: Clicking a rating item automatically focuses the root slider
+- **Keyboard focus**: Single tab stop - the entire rating group acts as one focusable unit
+- **Visual feedback**: Focus styling applied to the root container
+- **Disabled state**: Component becomes non-focusable when disabled
+
+### Customizing Accessibility
 
 You can enhance the accessibility experience with custom `aria-valuetext`:
 
 ```svelte
 <RatingGroup.Root
- "aria-valuetext"={(value, max) => {
-  if (value === 0) return "No rating selected";
-  return `${value} out of ${max} stars. ${value >= 4 ? "Excellent" : value >= 3 ? "Good" : "Fair"} rating.`;
- }}
+	"aria-valuetext"={(value, max) => {
+		if (value === 0) return "No rating selected";
+		return `${value} out of ${max} stars. ${value >= 4 ? "Excellent" : value >= 3 ? "Good" : "Fair"} rating.`;
+	}}
 >
+	<!-- ... -->
 </RatingGroup.Root>
 ```
 
@@ -461,48 +476,50 @@ You can enhance the accessibility experience with custom `aria-valuetext`:
 
 The rating group component used to group rating items under a common name for form submission.
 
-| Property                                                                                      | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Description                                                                                                                                                                               | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value` $bindable | `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The value of the rating group. You can bind to this value to control the rating group's value from outside the component.`Default: 0`                                       |                                      |
-| `onValueChange`                                             | `function`- (value: number) =\&gt; void                                                                                                                                                                                                                                                                          | A callback that is fired when the rating group's value changes.`Default:  undefined`                                                                                     |                                      |
-| `disabled`                                                  | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether or not the radio group is disabled. This prevents the user from interacting with it.`Default: false`                                                                |                                      |
-| `required`                                                  | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether or not the radio group is required.`Default: false`                                                                                                                 |                                      |
-| `name`                                                      | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The name of the rating group used in form submission. If provided, a hidden input element will be rendered to submit the value of the rating group.`Default:  undefined` |                                      |
-| `min`                                                       | `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The minimum value of the rating group.`Default: 0`                                                                                                                          |                                      |
-| `max`                                                       | `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The maximum value of the rating group.`Default: 5`                                                                                                                          |                                      |
-| `allowHalf`                                                 | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether or not the rating group allows half values.`Default: false`                                                                                                         |                                      |
-| `readonly`                                                  | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether or not the rating group is readonly.`Default: false`                                                                                                                |                                      |
-| `orientation`                                               | `enum`- 'vertical' \| 'horizontal'                                                                                                                                                                                                                                                                               | The orientation of the rating group. This will determine how keyboard navigation will work within the component.`Default: 'horizontal'`                                     |                                      |
-| `hoverPreview`                                              | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether or not the rating group shows a preview of the rating when hovering over the items.`Default: false`                                                                 |                                      |
-| `aria-valuetext`                                            | `union`- string \| (value: number, max: number) =\&gt; string                                                                                                                                                                                                                                                    | The text that describes the rating group's value.`` Default: `${value} out of ${max}` ``                                                                                    |                                      |
-| `ref` $bindable                                | `HTMLDivElement`                                                                                                                                                                                                                                                                                                                                                                                                                                                          | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                           |                                      |
-| `children`                                                  | `Snippet`- type RatingGroupItemState = "active" \| "partial" \| "inactive"; type RatingGroupItemData = \&#123; index: number; state: RatingGroupItemState; \&#125;; type ChildrenSnippetProps = \&#123; items: RatingGroupItemData\[]; value: number; max: number; \&#125;;                                      | The children content to render.`Default:  undefined`                                                                                                                     |                                      |
-| `child`                                                     | `Snippet`- type RatingGroupItemState = "active" \| "partial" \| "inactive"; type RatingGroupItemData = \&#123; index: number; state: RatingGroupItemState; \&#125;; type ChildSnippetProps = \&#123; items: RatingGroupItemData\[]; value: number; max: number; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                               |  | | Data Attribute                           | Value                                                                                                                                                                                                        | Description                                       | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-orientation` | `enum`- 'vertical' \| 'horizontal' | The orientation of the rating group.       |                                      |
-| `data-disabled`                                 | `''`                                                                                                                                                                                        | Present when the rating group is disabled. |                                      |
-| `data-readonly`                                 | `''`                                                                                                                                                                                        | Present when the rating group is readonly. |                                      |
-| `data-rating-group-root`                        | `''`                                                                                                                                                                                        | Present on the root element.               |  |
+| Property          | Type                                                                                                                                                                                                                                                                               | Description                                                                                                                                                                 | Details |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `value` $bindable | `number`                                                                                                                                                                                                                                                                           | The value of the rating group. You can bind to this value to control the rating group's value from outside the component.`Default: 0`                                       |         |
+| `onValueChange`   | `function` - (value: number) => void                                                                                                                                                                                                                                               | A callback that is fired when the rating group's value changes.`Default:  —— undefined`                                                                                     |         |
+| `disabled`        | `boolean`                                                                                                                                                                                                                                                                          | Whether or not the radio group is disabled. This prevents the user from interacting with it.`Default: false`                                                                |         |
+| `required`        | `boolean`                                                                                                                                                                                                                                                                          | Whether or not the radio group is required.`Default: false`                                                                                                                 |         |
+| `name`            | `string`                                                                                                                                                                                                                                                                           | The name of the rating group used in form submission. If provided, a hidden input element will be rendered to submit the value of the rating group.`Default:  —— undefined` |         |
+| `min`             | `number`                                                                                                                                                                                                                                                                           | The minimum value of the rating group.`Default: 0`                                                                                                                          |         |
+| `max`             | `number`                                                                                                                                                                                                                                                                           | The maximum value of the rating group.`Default: 5`                                                                                                                          |         |
+| `allowHalf`       | `boolean`                                                                                                                                                                                                                                                                          | Whether or not the rating group allows half values.`Default: false`                                                                                                         |         |
+| `readonly`        | `boolean`                                                                                                                                                                                                                                                                          | Whether or not the rating group is readonly.`Default: false`                                                                                                                |         |
+| `orientation`     | `enum` - 'vertical' \| 'horizontal'                                                                                                                                                                                                                                                | The orientation of the rating group. This will determine how keyboard navigation will work within the component.`Default: 'horizontal'`                                     |         |
+| `hoverPreview`    | `boolean`                                                                                                                                                                                                                                                                          | Whether or not the rating group shows a preview of the rating when hovering over the items.`Default: false`                                                                 |         |
+| `aria-valuetext`  | `union` - string \| (value: number, max: number) => string                                                                                                                                                                                                                         | The text that describes the rating group's value.`` Default: `${value} out of ${max}` ``                                                                                    |         |
+| `ref` $bindable   | `HTMLDivElement`                                                                                                                                                                                                                                                                   | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                           |         |
+| `children`        | `Snippet` - type RatingGroupItemState = "active" \| "partial" \| "inactive"; type RatingGroupItemData = { index: number; state: RatingGroupItemState; }; type ChildrenSnippetProps = { items: RatingGroupItemData\[]; value: number; max: number; };                               | The children content to render.`Default:  —— undefined`                                                                                                                     |         |
+| `child`           | `Snippet` - type RatingGroupItemState = "active" \| "partial" \| "inactive"; type RatingGroupItemData = { index: number; state: RatingGroupItemState; }; type ChildSnippetProps = { items: RatingGroupItemData\[]; value: number; max: number; props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                               |         |
+
+| Data Attribute           | Value                               | Description                                | Details |
+| ------------------------ | ----------------------------------- | ------------------------------------------ | ------- |
+| `data-orientation`       | `enum` - 'vertical' \| 'horizontal' | The orientation of the rating group.       |         |
+| `data-disabled`          | `''`                                | Present when the rating group is disabled. |         |
+| `data-readonly`          | `''`                                | Present when the rating group is readonly. |         |
+| `data-rating-group-root` | `''`                                | Present on the root element.               |         |
 
 ### RatingGroup.Item
 
 An rating item, which must be a child of the `RatingGroup.Root` component.
 
-| Property                                                                                     | Type                                                                                                                                                                                                                                                                                                                                                                 | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `index` required | `number`                                                                                                                                                                                                                                                                                                                                            | The index of the rating item.`Default:  undefined`                                                                                         |                                      |
-| `disabled`                                                 | `boolean`                                                                                                                                                                                                                                                                                                                                           | Whether the rating item is disabled.`Default: false`                                                                                          |                                      |
-| `ref` $bindable                               | `HTMLDivElement`                                                                                                                                                                                                                                                                                                                                    | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                 | `Snippet`- type RatingGroupItemState = "active" \| "partial" \| "inactive"; type ChildrenSnippetProps = \&#123; state: RatingGroupItemState; \&#125;;                                      | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                    | `Snippet`- type RatingGroupItemState = "active" \| "partial" \| "inactive"; type ChildSnippetProps = \&#123; state: RatingGroupItemState; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                        | Value                                                                                                                                                                                                        | Description                                        | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-disabled` | `''`                                                                                                                                                                                        | Present when the rating group is disabled.  |                                      |
-| `data-readonly`                              | `''`                                                                                                                                                                                        | Present when the rating group is readonly.  |                                      |
-| `data-value`                                 | `''`                                                                                                                                                                                        | The value of the rating item.               |                                      |
-| `data-state`                                 | `enum`- 'checked' \| 'unchecked'   | The rating item's checked state.            |                                      |
-| `data-orientation`                           | `enum`- 'vertical' \| 'horizontal' | The orientation of the parent rating group. |                                      |
-| `data-rating-group-item`                     | `''`                                                                                                                                                                                        | Present on the rating item element.         |  |
+| Property         | Type                                                                                                                                                                     | Description                                                                                                                                   | Details |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `index` required | `number`                                                                                                                                                                 | The index of the rating item.`Default:  —— undefined`                                                                                         |         |
+| `disabled`       | `boolean`                                                                                                                                                                | Whether the rating item is disabled.`Default: false`                                                                                          |         |
+| `ref` $bindable  | `HTMLDivElement`                                                                                                                                                         | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`       | `Snippet` - type RatingGroupItemState = "active" \| "partial" \| "inactive"; type ChildrenSnippetProps = { state: RatingGroupItemState; };                               | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`          | `Snippet` - type RatingGroupItemState = "active" \| "partial" \| "inactive"; type ChildSnippetProps = { state: RatingGroupItemState; props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Range Calendar](/docs/components/range-calendar)
+| Data Attribute           | Value                               | Description                                 | Details |
+| ------------------------ | ----------------------------------- | ------------------------------------------- | ------- |
+| `data-disabled`          | `''`                                | Present when the rating group is disabled.  |         |
+| `data-readonly`          | `''`                                | Present when the rating group is readonly.  |         |
+| `data-value`             | `''`                                | The value of the rating item.               |         |
+| `data-state`             | `enum` - 'checked' \| 'unchecked'   | The rating item's checked state.            |         |
+| `data-orientation`       | `enum` - 'vertical' \| 'horizontal' | The orientation of the parent rating group. |         |
+| `data-rating-group-item` | `''`                                | Present on the rating item element.         |         |
 
-[Next Scroll Area](/docs/components/scroll-area)
+[Previous Range Calendar](/docs/components/range-calendar) [Next Scroll Area](/docs/components/scroll-area)

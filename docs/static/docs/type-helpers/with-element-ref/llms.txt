@@ -1,6 +1,6 @@
 # WithElementRef Documentation
 
-A type helper to enable the `ref` prop on a component.
+A type helper to enable the \`ref\` prop on a component.
 
 This is a documentation section that potentially contains examples, demos, and other useful information related to a specific part of Bits UI. When helping users with this documentation, you can ignore the classnames applied to the demos unless they are relevant to the user's issue.
 
@@ -33,9 +33,8 @@ CustomButton.svelte
   let { yourPropA, yourPropB, ref = $bindable(null) }: Props = $props();
 </script>
 <button bind:this={ref}>
+  <!-- ... -->
 </button>
 ```
 
-[Previous useId](/docs/utilities/use-id)
-
-[Next WithoutChild](/docs/type-helpers/without-child)
+[Previous useId](/docs/utilities/use-id) [Next WithoutChild](/docs/type-helpers/without-child)

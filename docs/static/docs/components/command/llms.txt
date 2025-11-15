@@ -104,26 +104,30 @@ The Command component, also known as a command menu, is designed to provide user
 
 ## Key Features
 
-- **Dynamic Filtering**: As users type in the input field, the list of commands or items is instantly filtered and sorted based on an (overridable) scoring algorithm.  
-- **Keyboard Navigation**: Full support for keyboard interactions, allowing users to quickly navigate and select items without using a mouse.  
-- **Grouped Commands**: Ability to organize commands into logical groups, enhancing readability and organization.  
-- **Empty and Loading States**: Built-in components to handle scenarios where no results are found or when results are being loaded.  
-- **Accessibility**: Designed with ARIA attributes and keyboard interactions to ensure screen reader compatibility and accessibility standards. ## Architecture
+- **Dynamic Filtering**: As users type in the input field, the list of commands or items is instantly filtered and sorted based on an (overridable) scoring algorithm.
+- **Keyboard Navigation**: Full support for keyboard interactions, allowing users to quickly navigate and select items without using a mouse.
+- **Grouped Commands**: Ability to organize commands into logical groups, enhancing readability and organization.
+- **Empty and Loading States**: Built-in components to handle scenarios where no results are found or when results are being loaded.
+- **Accessibility**: Designed with ARIA attributes and keyboard interactions to ensure screen reader compatibility and accessibility standards.
+
+## Architecture
 
 The Command component is composed of several sub-components, each with a specific role:
 
-- **Root**: The main container that manages the overall state and context of the command menu.  
-- **Input**: The text input field where users can type to search or filter commands.  
-- **List**: The container for the list of commands or items.  
-- **Viewport**: The visible area of the command list, which applies CSS variables to handle dynamic resizing/animations based on the height of the list.  
-- **Empty**: A component to display when no results are found.  
-- **Loading**: A component to display while results are being fetched or processed.  
-- **Group**: A container for a group of items within the command menu.  
-- **GroupHeading**: A header element to provide an accessible label for a group of items.  
-- **GroupItems**: A container for the items within a group.  
-- **Item**: Individual selectable command or item.  
+- **Root**: The main container that manages the overall state and context of the command menu.
+- **Input**: The text input field where users can type to search or filter commands.
+- **List**: The container for the list of commands or items.
+- **Viewport**: The visible area of the command list, which applies CSS variables to handle dynamic resizing/animations based on the height of the list.
+- **Empty**: A component to display when no results are found.
+- **Loading**: A component to display while results are being fetched or processed.
+- **Group**: A container for a group of items within the command menu.
+- **GroupHeading**: A header element to provide an accessible label for a group of items.
+- **GroupItems**: A container for the items within a group.
+- **Item**: Individual selectable command or item.
 - **LinkItem**: A variant of `Command.Item` specifically for link-based actions.
-- **Separator**: A visual separator to divide different sections of the command list. ## Structure
+- **Separator**: A visual separator to divide different sections of the command list.
+
+## Structure
 
 Here's an overview of how the Command component is structured in code:
 
@@ -167,14 +171,17 @@ For seamless state synchronization, use Svelte's `bind:value` directive. This me
 </script>
 <button onclick={() => (myValue = "A")}> Select A </button>
 <Command.Root bind:value={myValue}>
+  <!-- ... -->
 </Command.Root>
 ```
 
 #### Key Benefits
 
-- Simplifies state management  
+- Simplifies state management
 - Automatically updates `myValue` when the internal state changes (e.g., via clicking on an item)
-- Allows external control (e.g., selecting an item via a separate button) ### 2. Change Handler
+- Allows external control (e.g., selecting an item via a separate button)
+
+### 2. Change Handler
 
 To perform additional logic on state changes, use the `onValueChange` prop. This approach is useful when you need to execute side effects when the value changes.
 
@@ -188,14 +195,17 @@ To perform additional logic on state changes, use the `onValueChange` prop. This
     console.log(value);
   }}
 >
+  <!-- ... -->
 </Command.Root>
 ```
 
 #### Use Cases
 
-- Implementing custom behaviors on value change  
-- Integrating with external state management solutions  
-- Triggering side effects (e.g., logging, data fetching) ### 3. Fully Controlled
+- Implementing custom behaviors on value change
+- Integrating with external state management solutions
+- Triggering side effects (e.g., logging, data fetching)
+
+### 3. Fully Controlled
 
 For complete control over the component's state, use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) to manage the value state externally. You pass a getter function and a setter function to the `bind:value` directive, giving you full control over how the value is updated/retrieved.
 
@@ -205,14 +215,17 @@ For complete control over the component's state, use a [Function Binding](https:
   let myValue = $state("");
 </script>
 <Command.Root bind:value={() => myValue, (newValue) => (myValue = newValue)}>
+  <!-- ... -->
 </Command.Root>
 ```
 
 #### When to Use
 
-- Implementing complex value change logic  
-- Coordinating multiple UI elements  
-- Debugging state-related issues ##### Note
+- Implementing complex value change logic
+- Coordinating multiple UI elements
+- Debugging state-related issues
+
+##### Note
 
 While powerful, fully controlled state should be used judiciously as it increases complexity and can cause unexpected behaviors if not handled carefully.
 
@@ -221,6 +234,8 @@ For more in-depth information on controlled components and advanced state manage
 ## In a Modal
 
 You can combine the `Command` component with the `Dialog` component to display the command menu within a modal.
+
+
 
 Expand Code
 
@@ -245,10 +260,10 @@ Expand Code
 <Dialog.Root bind:open={dialogOpen}>
   <Dialog.Trigger
     class="rounded-input bg-dark text-background
- shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden inline-flex
- h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
+	shadow-mini hover:bg-dark/95 focus-visible:ring-foreground focus-visible:ring-offset-background focus-visible:outline-hidden inline-flex
+	h-12 select-none items-center justify-center whitespace-nowrap px-[21px] text-[15px] font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.98]"
   >
-    Open Command Menu J
+    Open Command Menu ⌘J
   </Dialog.Trigger>
   <Dialog.Portal>
     <Dialog.Overlay
@@ -259,7 +274,7 @@ Expand Code
     >
       <Dialog.Title class="sr-only">Command Menu</Dialog.Title>
       <Dialog.Description class="sr-only">
-        This is the command menu. Use the arrow keys to navigate and press K to
+        This is the command menu. Use the arrow keys to navigate and press ⌘K to
         open the search bar.
       </Dialog.Description>
       <Command.Root
@@ -351,6 +366,8 @@ Expand Code
 
 You can add the `columns` prop to use the command as a grid.
 
+
+
 Expand Code
 
 ```svelte
@@ -407,79 +424,80 @@ Expand Code
       {
         name: "Pinned",
         items: [
-          { content: "", keywords: ["shrug"] },
-          { content: "", keywords: ["check", "mark"] },
-          { content: "", keywords: ["party"] }
+          { content: "🤷‍♂️", keywords: ["shrug"] },
+          { content: "✅", keywords: ["check", "mark"] },
+          { content: "🎉", keywords: ["party"] }
         ]
       },
       {
         name: "Frequently Used",
         items: [
-          { content: "", keywords: ["cent", "currency"] },
-          { content: "", keywords: ["box", "cardboard", "shipping"] },
-          { content: "", keywords: ["wifi"] },
-          { content: "", keywords: ["fire", "hot"] },
-          { content: "", keywords: ["star", "favorite"] },
-          { content: "", keywords: ["thumbs up", "like", "approve"] },
-          { content: "", keywords: ["rocket", "launch"] },
-          { content: "", keywords: ["clap", "applause"] }
+          { content: "¢", keywords: ["cent", "currency"] },
+          { content: "📦", keywords: ["box", "cardboard", "shipping"] },
+          { content: "🛜", keywords: ["wifi"] },
+          { content: "🔥", keywords: ["fire", "hot"] },
+          { content: "⭐", keywords: ["star", "favorite"] },
+          { content: "👍", keywords: ["thumbs up", "like", "approve"] },
+          { content: "🚀", keywords: ["rocket", "launch"] },
+          { content: "👏", keywords: ["clap", "applause"] }
         ]
       },
       {
         name: "All Emojis",
         items: [
-          { content: "", keywords: ["smile", "happy", "face"] },
-          { content: "", keywords: ["heart", "love"] },
-          { content: "", keywords: ["eyes", "look", "see"] },
-          { content: "", keywords: ["lightbulb", "idea"] },
-          { content: "", keywords: ["coffee", "drink", "break"] },
-          { content: "", keywords: ["computer", "laptop", "work"] },
-          { content: "", keywords: ["pencil", "edit", "write"] },
-          { content: "", keywords: ["calendar", "date", "schedule"] },
-          { content: "", keywords: ["phone", "call", "mobile"] },
-          { content: "", keywords: ["music", "note", "song"] },
-          { content: "", keywords: ["camera", "photo", "picture"] },
-          { content: "", keywords: ["gift", "present", "surprise"] },
-          { content: "", keywords: ["moon", "night", "sleep"] },
-          { content: "", keywords: ["sun", "day", "weather"] },
-          { content: "", keywords: ["rainbow", "color", "pride"] },
-          { content: "", keywords: ["earth", "world", "globe"] },
-          { content: "", keywords: ["tree", "nature", "plant"] },
-          { content: "", keywords: ["flower", "nature", "spring"] },
-          { content: "", keywords: ["fireworks", "celebration", "festival"] },
-          { content: "", keywords: ["balloon", "party", "birthday"] },
-          { content: "", keywords: ["cookie", "snack", "dessert"] },
-          { content: "", keywords: ["pizza", "food", "slice"] },
-          { content: "", keywords: ["ice cream", "dessert", "sweet"] },
-          { content: "", keywords: ["apple", "fruit", "food"] },
-          { content: "", keywords: ["banana", "fruit", "yellow"] },
-          { content: "", keywords: ["car", "vehicle", "drive"] },
-          { content: "", keywords: ["bicycle", "bike", "ride"] },
-          { content: "", keywords: ["train", "travel", "transport"] },
-          { content: "", keywords: ["airplane", "flight", "travel"] },
-          { content: "", keywords: ["anchor", "boat", "sea"] },
-          { content: "", keywords: ["medal", "award", "winner"] },
-          { content: "", keywords: ["soccer", "football", "sport"] },
-          { content: "", keywords: ["basketball", "sport", "game"] },
-          { content: "", keywords: ["trophy", "award", "win"] },
-          { content: "", keywords: ["book", "read", "study"] },
-          { content: "", keywords: ["mail", "envelope", "letter"] },
-          { content: "", keywords: ["star eyes", "excited", "wow"] },
-          { content: "", keywords: ["thinking", "hmm", "question"] },
-          { content: "", keywords: ["sleepy", "tired", "zzz"] },
-          { content: "", keywords: ["cry", "sad", "tears"] },
-          { content: "", keywords: ["laugh", "joy", "funny"] },
-          { content: "", keywords: ["wink", "flirt", "smile"] },
-          { content: "", keywords: ["nerd", "geek", "glasses"] },
-          { content: "", keywords: ["robot", "ai", "machine"] },
-          { content: "", keywords: ["ghost", "spooky", "halloween"] },
-          { content: "", keywords: ["alien", "space", "ufo"] }
+          { content: "😊", keywords: ["smile", "happy", "face"] },
+          { content: "❤️", keywords: ["heart", "love"] },
+          { content: "👀", keywords: ["eyes", "look", "see"] },
+          { content: "💡", keywords: ["lightbulb", "idea"] },
+          { content: "☕", keywords: ["coffee", "drink", "break"] },
+          { content: "💻", keywords: ["computer", "laptop", "work"] },
+          { content: "✏️", keywords: ["pencil", "edit", "write"] },
+          { content: "📅", keywords: ["calendar", "date", "schedule"] },
+          { content: "📱", keywords: ["phone", "call", "mobile"] },
+          { content: "🎵", keywords: ["music", "note", "song"] },
+          { content: "📷", keywords: ["camera", "photo", "picture"] },
+          { content: "🎁", keywords: ["gift", "present", "surprise"] },
+          { content: "🌙", keywords: ["moon", "night", "sleep"] },
+          { content: "☀️", keywords: ["sun", "day", "weather"] },
+          { content: "🌈", keywords: ["rainbow", "color", "pride"] },
+          { content: "🌍", keywords: ["earth", "world", "globe"] },
+          { content: "🌳", keywords: ["tree", "nature", "plant"] },
+          { content: "🌸", keywords: ["flower", "nature", "spring"] },
+          { content: "🎆", keywords: ["fireworks", "celebration", "festival"] },
+          { content: "🎈", keywords: ["balloon", "party", "birthday"] },
+          { content: "🍪", keywords: ["cookie", "snack", "dessert"] },
+          { content: "🍕", keywords: ["pizza", "food", "slice"] },
+          { content: "🍦", keywords: ["ice cream", "dessert", "sweet"] },
+          { content: "🍎", keywords: ["apple", "fruit", "food"] },
+          { content: "🍌", keywords: ["banana", "fruit", "yellow"] },
+          { content: "🚗", keywords: ["car", "vehicle", "drive"] },
+          { content: "🚲", keywords: ["bicycle", "bike", "ride"] },
+          { content: "🚆", keywords: ["train", "travel", "transport"] },
+          { content: "✈️", keywords: ["airplane", "flight", "travel"] },
+          { content: "⚓", keywords: ["anchor", "boat", "sea"] },
+          { content: "🏅", keywords: ["medal", "award", "winner"] },
+          { content: "⚽", keywords: ["soccer", "football", "sport"] },
+          { content: "🏀", keywords: ["basketball", "sport", "game"] },
+          { content: "🏆", keywords: ["trophy", "award", "win"] },
+          { content: "📚", keywords: ["book", "read", "study"] },
+          { content: "✉️", keywords: ["mail", "envelope", "letter"] },
+          { content: "🤩", keywords: ["star eyes", "excited", "wow"] },
+          { content: "🤔", keywords: ["thinking", "hmm", "question"] },
+          { content: "😴", keywords: ["sleepy", "tired", "zzz"] },
+          { content: "😢", keywords: ["cry", "sad", "tears"] },
+          { content: "😂", keywords: ["laugh", "joy", "funny"] },
+          { content: "😉", keywords: ["wink", "flirt", "smile"] },
+          { content: "🤓", keywords: ["nerd", "geek", "glasses"] },
+          { content: "🤖", keywords: ["robot", "ai", "machine"] },
+          { content: "👻", keywords: ["ghost", "spooky", "halloween"] },
+          { content: "👽", keywords: ["alien", "space", "ufo"] }
         ]
       }
     ]
   };
   const views: View[] = $state([defaultView, emojiView]);
-  const currentView = $derived(views[views.length - 1]); let search = $state("");
+  const currentView = $derived(views[views.length - 1]);
+  let search = $state("");
   function popView() {
     if (views.length > 1) {
       views.pop();
@@ -611,6 +629,7 @@ The following example shows how you might implement a strict substring match fil
   }
 </script>
 <Command.Root filter={customFilter}>
+  <!-- ... -->
 </Command.Root>
 ```
 
@@ -632,6 +651,7 @@ By default, the `Command` component uses the `computeCommandScore` function to d
   }
 </script>
 <Command.Root filter={customFilter}>
+  <!-- ... -->
 </Command.Root>
 ```
 
@@ -641,6 +661,7 @@ You can disable filtering by setting the `shouldFilter` prop to `false`.
 
 ```svelte
 <Command.Root shouldFilter={false}>
+  <!-- ... -->
 </Command.Root>
 ```
 
@@ -660,6 +681,7 @@ If you want one of the items to get all the benefits of a link (prefetching, etc
 
 ```svelte
 <Command.LinkItem href="/some/path">
+  <!-- ... -->
 </Command.LinkItem>
 ```
 
@@ -675,19 +697,24 @@ Access these by binding to the component:
   let command: typeof Command.Root;
 </script>
 <Command.Root bind:this={command}>
+  <!-- ... -->
 </Command.Root>
 ```
 
 ### Methods
 
-#### `getValidItems()` Returns an array of valid (non-disabled, visible) command items. Useful for checking bounds before operations.
+#### `getValidItems()`
+
+Returns an array of valid (non-disabled, visible) command items. Useful for checking bounds before operations.
 
 ```ts
 const items = command.getValidItems();
 console.log(items.length); // number of selectable items
 ```
 
-#### `updateSelectedToIndex(index: number)` Sets selection to item at specified index. No-op if index is invalid.
+#### `updateSelectedToIndex(index: number)`
+
+Sets selection to item at specified index. No-op if index is invalid.
 
 ```ts
 // select third item (if it exists)
@@ -699,14 +726,18 @@ if (index < items.length) {
 }
 ```
 
-#### `updateSelectedByGroup(change: 1 | -1)` Moves selection to first item in next/previous group. Falls back to next/previous item if no group found.
+#### `updateSelectedByGroup(change: 1 | -1)`
+
+Moves selection to first item in next/previous group. Falls back to next/previous item if no group found.
 
 ```ts
 command.updateSelectedByGroup(1); // move to next group
 command.updateSelectedByGroup(-1); // move to previous group
 ```
 
-#### `updateSelectedByItem(change: 1 | -1)` Moves selection up/down relative to current item. Wraps around if `loop` option enabled.
+#### `updateSelectedByItem(change: 1 | -1)`
+
+Moves selection up/down relative to current item. Wraps around if `loop` option enabled.
 
 ```ts
 command.updateSelectedByItem(1); // next item
@@ -723,7 +754,8 @@ command.updateSelectedByItem(-1); // previous item
     if (!command) return;
     const items = command.getValidItems();
     if (!items.length) return;
-    command.updateSelectedToIndex(items.length - 1); }
+    command.updateSelectedToIndex(items.length - 1);
+  }
 </script>
 <svelte:window
   onkeydown={(e) => {
@@ -733,6 +765,7 @@ command.updateSelectedByItem(-1); // previous item
   }}
 />
 <Command.Root bind:this={command}>
+  <!-- Command content -->
 </Command.Root>
 ```
 
@@ -757,181 +790,203 @@ A common pattern is to postfix the `value` with something unique, like an ID or 
 
 The main container that manages the overall state and context of the component.
 
-| Property                                                                                      | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                | Description                                                                                                                                                                                                                                                                                                      | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value` $bindable | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | The value of the command.`Default:`                                                                                                                                                                                                                                                                |                                      |
-| `onValueChange`                                             | `function`- (value: string) =\&gt; void                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | A callback that is fired when the command value changes.`Default:  undefined`                                                                                                                                                                                                                   |                                      |
-| `label`                                                     | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | An accessible label for the command menu. This is not visible and is only used for screen readers.`Default:  undefined`                                                                                                                                                                         |                                      |
-| `filter`                                                    | `function`- (value: string, search: string, keywords?: string\[]) =\&gt; number;                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | A custom filter function used to filter items. This function should return a number between `0` and `1`, with `1` being a perfect match, and `0` being no match, resulting in the item being hidden entirely. The items are sorted/filtered based on this score.`Default:  undefined`           |                                      |
-| `shouldFilter`                                              | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Whether or not the command menu should filter items. This is useful when you want to apply custom filtering logic outside of the Command component.`Default: true`                                                                                                                                 |                                      |
-| `columns`                                                   | `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | The number of columns in the grid layout if`Default:  undefined`                                                                                                                                                                                                                                |                                      |
-| `onStateChange`                                             | `function`- type CommandState = \&#123; /\*\* The value of the search query \*/ search: string; /\*\* The value of the selected command menu item \*/ value: string; /\*\* The filtered items \*/ filtered: \&#123; /\*\* The count of all visible items. \*/ count: number; /\*\* Map from visible item id to its search store. \*/ items: Map\&lt;string, number\&gt;; /\*\* Set of groups with at least one visible item. \*/ groups: Set\&lt;string\&gt;; \&#125;; \&#125;; type onStateChange = (state: Readonly\&lt;CommandState\&gt;) =\&gt; void; | A callback that fires when the command's internal state changes. This callback receives a readonly snapshot of the current state. The callback is debounced and only fires once per batch of related updates (e.g., when typing triggers filtering and selection changes).`Default:  undefined` |                                      |
-| `loop`                                                      | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Whether or not the command menu should loop through items when navigating with the keyboard.`Default: false`                                                                                                                                                                                       |                                      |
-| `disablePointerSelection`                                   | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Set this to true to prevent items from being selected when the users pointer moves over them.`Default: false`                                                                                                                                                                                      |                                      |
-| `vimBindings`                                               | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Whether VIM bindings should be enabled or not, which allow the user to navigate using ctrl+n/j/p/k`Default: true`                                                                                                                                                                                  |                                      |
-| `disableInitialScroll`                                      | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | Whether to disable scrolling the selected item into view on initial mount. When `true`, prevents automatic scrolling when the command menu first renders and selects its first item, but still allows scrolling on subsequent selections.`Default: false`                                          |                                      |
-| `ref` $bindable                                | `HTMLDivElement`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                                                                                  |                                      |
-| `children`                                                  | `Snippet`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | The children content to render.`Default:  undefined`                                                                                                                                                                                                                                            |                                      |
-| `child`                                                     | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;;                                                                                                                                                                                                                                                                                                                                                                                                                                                                   | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                                                                                                                                      |  | | Data Attribute                            | Value                 | Description                         | Details                                                                                                                                                                                        |
-| ---------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-root` | `''` | Present on the root element. |  |
+| Property                  | Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | Description                                                                                                                                                                                                                                                                                        | Details |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `value` $bindable         | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The value of the command.`Default:`                                                                                                                                                                                                                                                                |         |
+| `onValueChange`           | `function` - (value: string) => void                                                                                                                                                                                                                                                                                                                                                                                                                                                                      | A callback that is fired when the command value changes.`Default:  —— undefined`                                                                                                                                                                                                                   |         |
+| `label`                   | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | An accessible label for the command menu. This is not visible and is only used for screen readers.`Default:  —— undefined`                                                                                                                                                                         |         |
+| `filter`                  | `function` - (value: string, search: string, keywords?: string\[]) => number;                                                                                                                                                                                                                                                                                                                                                                                                                             | A custom filter function used to filter items. This function should return a number between `0` and `1`, with `1` being a perfect match, and `0` being no match, resulting in the item being hidden entirely. The items are sorted/filtered based on this score.`Default:  —— undefined`           |         |
+| `shouldFilter`            | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether or not the command menu should filter items. This is useful when you want to apply custom filtering logic outside of the Command component.`Default: true`                                                                                                                                 |         |
+| `columns`                 | `number`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | The number of columns in the grid layout if`Default:  —— undefined`                                                                                                                                                                                                                                |         |
+| `onStateChange`           | `function` - type CommandState = { /\*\* The value of the search query \*/ search: string; /\*\* The value of the selected command menu item \*/ value: string; /\*\* The filtered items \*/ filtered: { /\*\* The count of all visible items. \*/ count: number; /\*\* Map from visible item id to its search store. \*/ items: Map\<string, number>; /\*\* Set of groups with at least one visible item. \*/ groups: Set\<string>; }; }; type onStateChange = (state: Readonly\<CommandState>) => void; | A callback that fires when the command's internal state changes. This callback receives a readonly snapshot of the current state. The callback is debounced and only fires once per batch of related updates (e.g., when typing triggers filtering and selection changes).`Default:  —— undefined` |         |
+| `loop`                    | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether or not the command menu should loop through items when navigating with the keyboard.`Default: false`                                                                                                                                                                                       |         |
+| `disablePointerSelection` | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Set this to true to prevent items from being selected when the users pointer moves over them.`Default: false`                                                                                                                                                                                      |         |
+| `vimBindings`             | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether VIM bindings should be enabled or not, which allow the user to navigate using ctrl+n/j/p/k`Default: true`                                                                                                                                                                                  |         |
+| `disableInitialScroll`    | `boolean`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | Whether to disable scrolling the selected item into view on initial mount. When `true`, prevents automatic scrolling when the command menu first renders and selects its first item, but still allows scrolling on subsequent selections.`Default: false`                                          |         |
+| `ref` $bindable           | `HTMLDivElement`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                                                                                  |         |
+| `children`                | `Snippet`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | The children content to render.`Default:  —— undefined`                                                                                                                                                                                                                                            |         |
+| `child`                   | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; };                                                                                                                                                                                                                                                                                                                                                                                                                                     | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                                                                                                                                      |         |
+
+| Data Attribute      | Value | Description                  | Details |
+| ------------------- | ----- | ---------------------------- | ------- |
+| `data-command-root` | `''`  | Present on the root element. |         |
 
 ### Command.Input
 
 The text input field where users can type to search or filter commands.
 
-| Property                                                                                      | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value` $bindable | `string`                                                                                                                                                                                                                                         | The value of the search query. This is used to filter items and to search for items.`Default:  undefined`                                  |                                      |
-| `ref` $bindable                                | `HTMLInputElement`                                                                                                                                                                                                                               | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                  | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                     | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                             | Value                 | Description                          | Details                                                                                                                                                                                        |
-| ----------------------------------------------------------------------------- | ------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-input` | `''` | Present on the input element. |  |
+| Property          | Type                                                                  | Description                                                                                                                                   | Details |
+| ----------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `value` $bindable | `string`                                                              | The value of the search query. This is used to filter items and to search for items.`Default:  —— undefined`                                  |         |
+| `ref` $bindable   | `HTMLInputElement`                                                    | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`        | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`           | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute       | Value | Description                   | Details |
+| -------------------- | ----- | ----------------------------- | ------- |
+| `data-command-input` | `''`  | Present on the input element. |         |
 
 ### Command.List
 
 The container for the viewport, items, and other elements of the command menu.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                            | Value                 | Description                         | Details                                                                                                                                                                                        |
-| ---------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-list` | `''` | Present on the list element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-| CSS Variable                                       | Description                                                                                                           | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `--bits-command-list-height` | The height of the command list element, which is computed by the `Command.Viewport` component. |  |
+| Data Attribute      | Value | Description                  | Details |
+| ------------------- | ----- | ---------------------------- | ------- |
+| `data-command-list` | `''`  | Present on the list element. |         |
+
+| CSS Variable                 | Description                                                                                    | Details |
+| ---------------------------- | ---------------------------------------------------------------------------------------------- | ------- |
+| `--bits-command-list-height` | The height of the command list element, which is computed by the `Command.Viewport` component. |         |
 
 ### Command.Viewport
 
 The visible area of the command list, which applies CSS variables to handle dynamic resizing/animations based on the height of the list.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                | Value                 | Description                             | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-viewport` | `''` | Present on the viewport element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute          | Value | Description                      | Details |
+| ----------------------- | ----- | -------------------------------- | ------- |
+| `data-command-viewport` | `''`  | Present on the viewport element. |         |
 
 ### Command.Group
 
 A container for a group of items within the command menu.
 
-| Property                                                               | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                                                                                                                                 | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value` | `string`                                                                                                                                                                                                                                         | If a `Command.GroupHeading` is used within this group, the contents of the heading will be used as the value. If the content is dynamic or you wish to have a more specific value, you can provide a unique value for the group here.`Default:  undefined` |                                      |
-| `forceMount`                         | `boolean`                                                                                                                                                                                                                                        | Whether or not the group should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                                                                                                                                      |                                      |
-| `ref` $bindable         | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                                             |                                      |
-| `children`                           | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                                                                                                                                       |                                      |
-| `child`                              | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                                                                                                                 |  | | Data Attribute                             | Value                 | Description                          | Details                                                                                                                                                                                        |
-| ----------------------------------------------------------------------------- | ------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-group` | `''` | Present on the group element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `value`         | `string`                                                              | If a `Command.GroupHeading` is used within this group, the contents of the heading will be used as the value. If the content is dynamic or you wish to have a more specific value, you can provide a unique value for the group here.`Default:  —— undefined` |         |
+| `forceMount`    | `boolean`                                                             | Whether or not the group should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                                                                                                                                      |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                                                                                                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                                                                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                                                                                                                 |         |
+
+| Data Attribute       | Value | Description                   | Details |
+| -------------------- | ----- | ----------------------------- | ------- |
+| `data-command-group` | `''`  | Present on the group element. |         |
 
 ### Command.GroupHeading
 
 A heading element to provide an accessible label for a group of items.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                     | Value                 | Description                                  | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-group-heading` | `''` | Present on the group heading element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute               | Value | Description                           | Details |
+| ---------------------------- | ----- | ------------------------------------- | ------- |
+| `data-command-group-heading` | `''`  | Present on the group heading element. |         |
 
 ### Command.GroupItems
 
 The container for the items within a group.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                   | Value                 | Description                                | Details                                                                                                                                                                                        |
-| ----------------------------------------------------------------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-group-items` | `''` | Present on the group items element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute             | Value | Description                         | Details |
+| -------------------------- | ----- | ----------------------------------- | ------- |
+| `data-command-group-items` | `''`  | Present on the group items element. |         |
 
 ### Command.Item
 
 Represents a single item within the command menu. If you wish to render an anchor element to link to a page, use the `Command.LinkItem` component.
 
-| Property                                                                                     | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value` required | `string`                                                                                                                                                                                                                                         | The value of the item.`Default:  undefined`                                                                                                |                                      |
-| `keywords`                                                 | `string[]`                                                                                                                                                                                                                                       | An array of additional keywords or aliases that will be used to filter the item.`Default:  undefined`                                      |                                      |
-| `forceMount`                                               | `boolean`                                                                                                                                                                                                                                        | Whether or not the item should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                       |                                      |
-| `onSelect`                                                 | `function`- () =\&gt; void                                                              | A callback that is fired when the item is selected.`Default:  undefined`                                                                   |                                      |
-| `disabled`                                                 | `boolean`                                                                                                                                                                                                                                        | Whether or not the combobox item is disabled. This will prevent interaction/selection.`Default: false`                                        |                                      |
-| `ref` $bindable                               | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                 | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                    | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                        | Value                 | Description                               | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------ | ------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-disabled` | `''` | Present when the item is disabled. |                                      |
-| `data-selected`                              | `''` | Present when the item is selected. |                                      |
-| `data-command-item`                          | `''` | Present on the item element.       |  |
+| Property         | Type                                                                  | Description                                                                                                                                   | Details |
+| ---------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `value` required | `string`                                                              | The value of the item.`Default:  —— undefined`                                                                                                |         |
+| `keywords`       | `string[]`                                                            | An array of additional keywords or aliases that will be used to filter the item.`Default:  —— undefined`                                      |         |
+| `forceMount`     | `boolean`                                                             | Whether or not the item should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                       |         |
+| `onSelect`       | `function` - () => void                                               | A callback that is fired when the item is selected.`Default:  —— undefined`                                                                   |         |
+| `disabled`       | `boolean`                                                             | Whether or not the combobox item is disabled. This will prevent interaction/selection.`Default: false`                                        |         |
+| `ref` $bindable  | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`       | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`          | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute      | Value | Description                        | Details |
+| ------------------- | ----- | ---------------------------------- | ------- |
+| `data-disabled`     | `''`  | Present when the item is disabled. |         |
+| `data-selected`     | `''`  | Present when the item is selected. |         |
+| `data-command-item` | `''`  | Present on the item element.       |         |
 
 ### Command.LinkItem
 
 Similar to the `Command.Item` component, but renders an anchor element to take advantage of preloading before navigation.
 
-| Property                                                                                     | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `value` required | `string`                                                                                                                                                                                                                                         | The value of the item.`Default:  undefined`                                                                                                |                                      |
-| `keywords`                                                 | `string[]`                                                                                                                                                                                                                                       | An array of additional keywords or aliases that will be used to filter the item.`Default:  undefined`                                      |                                      |
-| `forceMount`                                               | `boolean`                                                                                                                                                                                                                                        | Whether or not the item should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                       |                                      |
-| `onSelect`                                                 | `function`- () =\&gt; void                                                              | A callback that is fired when the item is selected.`Default:  undefined`                                                                   |                                      |
-| `disabled`                                                 | `boolean`                                                                                                                                                                                                                                        | Whether or not the combobox item is disabled. This will prevent interaction/selection.`Default: false`                                        |                                      |
-| `ref` $bindable                               | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                 | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                    | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                        | Value                 | Description                               | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------ | ------------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-disabled` | `''` | Present when the item is disabled. |                                      |
-| `data-selected`                              | `''` | Present when the item is selected. |                                      |
-| `data-command-item`                          | `''` | Present on the item element.       |  |
+| Property         | Type                                                                  | Description                                                                                                                                   | Details |
+| ---------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `value` required | `string`                                                              | The value of the item.`Default:  —— undefined`                                                                                                |         |
+| `keywords`       | `string[]`                                                            | An array of additional keywords or aliases that will be used to filter the item.`Default:  —— undefined`                                      |         |
+| `forceMount`     | `boolean`                                                             | Whether or not the item should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                       |         |
+| `onSelect`       | `function` - () => void                                               | A callback that is fired when the item is selected.`Default:  —— undefined`                                                                   |         |
+| `disabled`       | `boolean`                                                             | Whether or not the combobox item is disabled. This will prevent interaction/selection.`Default: false`                                        |         |
+| `ref` $bindable  | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`       | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`          | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute      | Value | Description                        | Details |
+| ------------------- | ----- | ---------------------------------- | ------- |
+| `data-disabled`     | `''`  | Present when the item is disabled. |         |
+| `data-selected`     | `''`  | Present when the item is selected. |         |
+| `data-command-item` | `''`  | Present on the item element.       |         |
 
 ### Command.Empty
 
 A component to display when no results are found.
 
-| Property                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                                      | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `forceMount` | `boolean`                                                                                                                                                                                                                                        | Whether or not to forcefully mount the empty state, regardless of the internal filtering logic. Useful when you want to handle filtering yourself.`Default: false` |                                      |
-| `ref` $bindable              | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |                                      |
-| `children`                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                                            |                                      |
-| `child`                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                      |  | | Data Attribute                             | Value                 | Description                          | Details                                                                                                                                                                                        |
-| ----------------------------------------------------------------------------- | ------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-empty` | `''` | Present on the empty element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                                        | Details |
+| --------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `forceMount`    | `boolean`                                                             | Whether or not to forcefully mount the empty state, regardless of the internal filtering logic. Useful when you want to handle filtering yourself.`Default: false` |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                                            |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                      |         |
+
+| Data Attribute       | Value | Description                   | Details |
+| -------------------- | ----- | ----------------------------- | ------- |
+| `data-command-empty` | `''`  | Present on the empty element. |         |
 
 ### Command.Loading
 
 A component to display while results are being fetched or processed.
 
-| Property                                                                  | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `progress` | `number`                                                                                                                                                                                                                                         | The progress of the loading state.`Default: 0`                                                                                                |                                      |
-| `ref` $bindable            | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                              | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                 | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                               | Value                 | Description                            | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-loading` | `''` | Present on the loading element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `progress`      | `number`                                                              | The progress of the loading state.`Default: 0`                                                                                                |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute         | Value | Description                     | Details |
+| ---------------------- | ----- | ------------------------------- | ------- |
+| `data-command-loading` | `''`  | Present on the loading element. |         |
 
 ### Command.Separator
 
 A visual separator to divide different sections of the command list. Visible when the search query is empty or the `forceMount` prop is `true`.
 
-| Property                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `forceMount` | `boolean`                                                                                                                                                                                                                                        | Whether or not the separator should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                  |                                      |
-| `ref` $bindable              | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                 | Value                 | Description                              | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-command-separator` | `''` | Present on the separator element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `forceMount`    | `boolean`                                                             | Whether or not the separator should always be mounted to the DOM, regardless of the internal filtering logic`Default: false`                  |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Combobox](/docs/components/combobox)
+| Data Attribute           | Value | Description                       | Details |
+| ------------------------ | ----- | --------------------------------- | ------- |
+| `data-command-separator` | `''`  | Present on the separator element. |         |
 
-[Next Context Menu](/docs/components/context-menu)
+[Previous Combobox](/docs/components/combobox) [Next Context Menu](/docs/components/context-menu)

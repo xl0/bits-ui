@@ -11,7 +11,7 @@ Copy Page
   import { Toggle } from "bits-ui";
   import LockKeyOpen from "phosphor-svelte/lib/LockKeyOpen";
   let unlocked = $state(false);
-  const code = $derived(unlocked ? "B1T5" : "");
+  const code = $derived(unlocked ? "B1T5" : "••••");
 </script>
 <div
   class="min-h-input rounded-card-sm border-border bg-background-alt shadow-mini flex h-full w-[176px] items-center gap-2 border py-1 pl-[18px] pr-1.5"
@@ -75,6 +75,7 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
   }
 </script>
 <Toggle.Root bind:pressed={getPressed, setPressed}>
+  <!-- ... -->
 </Toggle.Root>
 ```
 
@@ -84,19 +85,19 @@ Use a [Function Binding](https://svelte.dev/docs/svelte/bind#Function-bindings) 
 
 The toggle button.
 
-| Property                                                                                        | Type                                                                                                                                                                                                                                                            | Description                                                                                                                                                 | Details                                                                                                                                                                                      |
-| ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pressed` $bindable | `boolean`                                                                                                                                                                                                                                      | Whether or not the toggle button is pressed.`Default: false`                                                                                  |                                      |
-| `onPressedChange`                                             | `function`- (pressed: boolean) =\&gt; void                                              | A callback function called when the pressed state of the toggle changes.`Default:  undefined`                                              |                                      |
-| `disabled`                                                    | `boolean`                                                                                                                                                                                                                                      | Whether or not the switch is disabled.`Default: false`                                                                                        |                                      |
-| `ref` $bindable                                  | `HTMLButtonElement`                                                                                                                                                                                                                            | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                    | `Snippet`                                                                                                                                                                                                                                      | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                       | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                     | Value                                                                                                                                                                                         | Description                                          | Details                                                                                                                                                                                      |
-| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'on' \| 'off' | Whether the toggle is in the on or off state. |                                      |
-| `data-disabled`                           | `''`                                                                                                                                                                         | Present when the toggle is disabled.          |                                      |
-| `data-toggle-root`                        | `''`                                                                                                                                                                         | Present on the root element.                  |  |
+| Property            | Type                                                                  | Description                                                                                                                                   | Details |
+| ------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `pressed` $bindable | `boolean`                                                             | Whether or not the toggle button is pressed.`Default: false`                                                                                  |         |
+| `onPressedChange`   | `function` - (pressed: boolean) => void                               | A callback function called when the pressed state of the toggle changes.`Default:  —— undefined`                                              |         |
+| `disabled`          | `boolean`                                                             | Whether or not the switch is disabled.`Default: false`                                                                                        |         |
+| `ref` $bindable     | `HTMLButtonElement`                                                   | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`          | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`             | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Time Range Field](/docs/components/time-range-field)
+| Data Attribute     | Value                  | Description                                   | Details |
+| ------------------ | ---------------------- | --------------------------------------------- | ------- |
+| `data-state`       | `enum` - 'on' \| 'off' | Whether the toggle is in the on or off state. |         |
+| `data-disabled`    | `''`                   | Present when the toggle is disabled.          |         |
+| `data-toggle-root` | `''`                   | Present on the root element.                  |         |
 
-[Next Toggle Group](/docs/components/toggle-group)
+[Previous Time Range Field](/docs/components/time-range-field) [Next Toggle Group](/docs/components/toggle-group)

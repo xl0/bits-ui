@@ -53,6 +53,7 @@ Copy Page
 </script>
 <ScrollArea.Root>
   <ScrollArea.Viewport>
+    <!-- Scrollable content here -->
   </ScrollArea.Viewport>
   <ScrollArea.Scrollbar orientation="vertical">
     <ScrollArea.Thumb />
@@ -120,6 +121,7 @@ The `hover` type is the default type of the scroll area, demonstrated in the fea
 
 ```svelte
 <MyScrollArea type="hover">
+  <!-- ... -->
 </MyScrollArea>
 ```
 
@@ -129,6 +131,7 @@ The `scroll` type displays the scrollbars when the user scrolls the content. Thi
 
 ```svelte
 <MyScrollArea type="scroll">
+  <!-- ... -->
 </MyScrollArea>
 ```
 
@@ -138,6 +141,7 @@ The `auto` type behaves similarly to your typical browser scrollbars. When the c
 
 ```svelte
 <MyScrollArea type="auto">
+  <!-- ... -->
 </MyScrollArea>
 ```
 
@@ -147,6 +151,7 @@ The `always` type behaves as if you set `overflow: scroll` on the scroll area. S
 
 ```svelte
 <MyScrollArea type="always" orientation="both">
+  <!-- ... -->
 </MyScrollArea>
 ```
 
@@ -156,6 +161,7 @@ You can customize the hide delay of the scrollbars using the `scrollHideDelay` p
 
 ```svelte
 <MyScrollArea scrollHideDelay={10}>
+  <!-- ... -->
 </MyScrollArea>
 ```
 
@@ -165,73 +171,79 @@ You can customize the hide delay of the scrollbars using the `scrollHideDelay` p
 
 The container of all scroll area components. Overflow is hidden on this element to prevent double scrollbars.
 
-| Property                                                              | Type                                                                                                                                                                                                                                                            | Description                                                                                                                                                 | Details                                                                                                                                                                                      |
-| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` | `enum`- 'hover' \| 'scroll' \| 'auto' \| 'always'                                       | The type of scroll area.`Default: 'hover'`                                                                                                    |                                      |
-| `scrollHideDelay`                   | `number`                                                                                                                                                                                                                                       | The delay in milliseconds before the scroll area hides itself when using `'hover'` or `'scroll'` type.`Default: 600`                          |                                      |
-| `dir`                               | `enum`- 'ltr' \| 'rtl'                                                                  | The reading direction of the app.`Default: 'ltr'`                                                                                             |                                      |
-| `ref` $bindable        | `HTMLDivElement`                                                                                                                                                                                                                               | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                          | `Snippet`                                                                                                                                                                                                                                      | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                             | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                | Value                 | Description                         | Details                                                                                                                                                                                      |
-| -------------------------------------------------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-scroll-area-root` | `''` | Present on the root element. |  |
+| Property          | Type                                                                  | Description                                                                                                                                   | Details |
+| ----------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `type`            | `enum` - 'hover' \| 'scroll' \| 'auto' \| 'always'                    | The type of scroll area.`Default: 'hover'`                                                                                                    |         |
+| `scrollHideDelay` | `number`                                                              | The delay in milliseconds before the scroll area hides itself when using `'hover'` or `'scroll'` type.`Default: 600`                          |         |
+| `dir`             | `enum` - 'ltr' \| 'rtl'                                               | The reading direction of the app.`Default: 'ltr'`                                                                                             |         |
+| `ref` $bindable   | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`        | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`           | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
+
+| Data Attribute          | Value | Description                  | Details |
+| ----------------------- | ----- | ---------------------------- | ------- |
+| `data-scroll-area-root` | `''`  | Present on the root element. |         |
 
 ### ScrollArea.Viewport
 
 The component which wraps the content and is responsible for computing the scroll area size.
 
-| Property                                                                                    | Type                              | Description                                                                                                                     | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLDivElement` | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null` |                                      |
-| `children`                                                | `Snippet`        | The children content to render.`Default:  undefined`                                                           |  |
+| Property        | Type             | Description                                                                                                       | Details |
+| --------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLDivElement` | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null` |         |
+| `children`      | `Snippet`        | The children content to render.`Default:  —— undefined`                                                           |         |
 
-| Data Attribute                                    | Value                 | Description                             | Details                                                                                                                                                                                      |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------- | ------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-scroll-area-viewport` | `''` | Present on the viewport element. |  |
+| Data Attribute              | Value | Description                      | Details |
+| --------------------------- | ----- | -------------------------------- | ------- |
+| `data-scroll-area-viewport` | `''`  | Present on the viewport element. |         |
 
 ### ScrollArea.Scrollbar
 
 A scrollbar of the scroll area.
 
-| Property                                                                                           | Type                                                                                                                                                                                                                                                            | Description                                                                                                                                                                      | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `orientation` required | `enum`- 'horizontal' \| 'vertical'                                                      | The orientation of the scrollbar.`Default:  undefined`                                                                                                          |                                        |
-| `forceMount`                                                     | `boolean`                                                                                                                                                                                                                                      | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false` |                                        |
-| `ref` $bindable                                     | `HTMLDivElement`                                                                                                                                                                                                                               | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |                                        |
-| `children`                                                       | `Snippet`                                                                                                                                                                                                                                      | The children content to render.`Default:  undefined`                                                                                                            |                                        |
-| `child`                                                          | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                      |  | | Data Attribute                     | Value                                                                                                                                                                                                   | Description                                             | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'visible' \| 'hidden' | The visibility state of the scrollbar            |                                      |
-| `data-scroll-area-scrollbar-x`            | `''`                                                                                                                                                                                   | Present on the `'horizontal'` scrollbar element. |                                      |
-| `data-scroll-area-scrollbar-y`            | `''`                                                                                                                                                                                   | Present on the `'vertical'` scrollbar element.   |  |
+| Property               | Type                                                                  | Description                                                                                                                                                        | Details |
+| ---------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `orientation` required | `enum` - 'horizontal' \| 'vertical'                                   | The orientation of the scrollbar.`Default:  —— undefined`                                                                                                          |         |
+| `forceMount`           | `boolean`                                                             | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false` |         |
+| `ref` $bindable        | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |         |
+| `children`             | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                                            |         |
+| `child`                | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                      |         |
+
+| Data Attribute                 | Value                          | Description                                      | Details |
+| ------------------------------ | ------------------------------ | ------------------------------------------------ | ------- |
+| `data-state`                   | `enum` - 'visible' \| 'hidden' | The visibility state of the scrollbar            |         |
+| `data-scroll-area-scrollbar-x` | `''`                           | Present on the `'horizontal'` scrollbar element. |         |
+| `data-scroll-area-scrollbar-y` | `''`                           | Present on the `'vertical'` scrollbar element.   |         |
 
 ### ScrollArea.Thumb
 
 A thumb of a scrollbar in the scroll area.
 
-| Property                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                                      | Details                                                                                                                                                                                        |
-| -------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `forceMount` | `boolean`                                                                                                                                                                                                                                        | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false` |                                      |
-| `ref` $bindable              | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |                                      |
-| `children`                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                                            |                                      |
-| `child`                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined`                      |  | | Data Attribute                     | Value                                                                                                                                                                                                   | Description                                         | Details                                                                                                                                                                                        |
-| --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-state` | `enum`- 'visible' \| 'hidden' | The visibility state of the scrollbar        |                                      |
-| `data-scroll-area-thumb-x`                | `''`                                                                                                                                                                                   | Present on the `'horizontal'` thumb element. |                                      |
-| `data-scroll-area-thumb-y`                | `''`                                                                                                                                                                                   | Present on the `'vertical'` thumb element.   |  |
+| Property        | Type                                                                  | Description                                                                                                                                                        | Details |
+| --------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------- |
+| `forceMount`    | `boolean`                                                             | Whether or not to forcefully mount the content. This is useful if you want to use Svelte transitions or another animation library for the content.`Default: false` |         |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                                                  |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                                            |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined`                      |         |
+
+| Data Attribute             | Value                          | Description                                  | Details |
+| -------------------------- | ------------------------------ | -------------------------------------------- | ------- |
+| `data-state`               | `enum` - 'visible' \| 'hidden' | The visibility state of the scrollbar        |         |
+| `data-scroll-area-thumb-x` | `''`                           | Present on the `'horizontal'` thumb element. |         |
+| `data-scroll-area-thumb-y` | `''`                           | Present on the `'vertical'` thumb element.   |         |
 
 ### ScrollArea.Corner
 
 The corner element between the X and Y scrollbars.
 
-| Property                                                                                    | Type                                                                                                                                                                                                                                                              | Description                                                                                                                                                 | Details                                                                                                                                                                                        |
-| ------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ref` $bindable | `HTMLDivElement`                                                                                                                                                                                                                                 | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |                                      |
-| `children`                                                | `Snippet`                                                                                                                                                                                                                                        | The children content to render.`Default:  undefined`                                                                                       |                                      |
-| `child`                                                   | `Snippet`- type SnippetProps = \&#123; props: Record\&lt;string, unknown\&gt;; \&#125;; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  undefined` |  | | Data Attribute                                  | Value                 | Description                           | Details                                                                                                                                                                                        |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `data-scroll-area-corner` | `''` | Present on the corner element. |  |
+| Property        | Type                                                                  | Description                                                                                                                                   | Details |
+| --------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `ref` $bindable | `HTMLDivElement`                                                      | The underlying DOM element being rendered. You can bind to this to get a reference to the element.`Default: null`                             |         |
+| `children`      | `Snippet`                                                             | The children content to render.`Default:  —— undefined`                                                                                       |         |
+| `child`         | `Snippet` - type SnippetProps = { props: Record\<string, unknown>; }; | Use render delegation to render your own element. See [Child Snippet](/docs/child-snippet) docs for more information.`Default:  —— undefined` |         |
 
-[Previous Rating Group](/docs/components/rating-group)
+| Data Attribute            | Value | Description                    | Details |
+| ------------------------- | ----- | ------------------------------ | ------- |
+| `data-scroll-area-corner` | `''`  | Present on the corner element. |         |
 
-[Next Select](/docs/components/select)
+[Previous Rating Group](/docs/components/rating-group) [Next Select](/docs/components/select)
